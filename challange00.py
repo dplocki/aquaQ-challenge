@@ -38,4 +38,4 @@ def decode_message(instructions: Iterator[Tuple[int, int]]) -> Iterator[str]:
 
 assert read_letter(KEY_PAD, 7, 3) == "r"
 
-print("Solution:", "".join(decode_message(parse_input("input01.txt"))))
+print("Solution:", "".join(decode_message(parse_input("input00.txt"))))
