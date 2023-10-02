@@ -1,3 +1,6 @@
+from typing import Iterator
+
+
 KEY_PAD = {
     1: None,
     2: 'abc',
@@ -12,6 +15,11 @@ KEY_PAD = {
 }
 
 
+def load_file_content(file_name: str) -> Iterator[str]:
+    with open(file_name, 'r') as file:
+        yield from file.readlines()
+
+
 def read_letter(KEY_PAD, key, times) -> str:
     letters = KEY_PAD[key]
 
@@ -19,14 +27,10 @@ def read_letter(KEY_PAD, key, times) -> str:
 
 
 def x():
-    with open('input01.txt', 'r') as file:
-        content = file.readlines()
+    for line in load_file_content('input01.txt'):
+        key, times = map(int, line.strip().split())
 
-        for line in content:
-            key, times = map(int, line.strip().split())
-
-
-            yield read_letter(KEY_PAD, key, times)
+        yield read_letter(KEY_PAD, key, times)
 
 
 assert read_letter(KEY_PAD, 7, 3) == 'r'
