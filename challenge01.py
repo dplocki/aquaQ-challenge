@@ -11,12 +11,10 @@ def conversion_process(value: str) -> str:
     value_size = len(value)
     require_size = (value_size // 3 + 1) * 3
     extended_value = value.lower() + (require_size - value_size) * '0'
-
     characters = list(map(lambda character: character if is_hex(character) else '0', extended_value))
+    characters_size = require_size // 3
 
-    characters_size = len(characters) // 3
-    return ''.join(characters[0:characters_size][:2] + characters[characters_size:2 * characters_size][:2] + characters[characters_size * 2:3 * characters_size][:2])
-
+    return ''.join(characters[:characters_size][:2] + characters[characters_size:characters_size * 2][:2] + characters[characters_size * 2:][:2])
 
 
 assert conversion_process('kdb4life') == '0d40fe'
