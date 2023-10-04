@@ -1,26 +1,24 @@
-def get_file_content(file_name: str) -> str:
-    with open(file_name) as file:
-        return file.read().strip()
+from utils import get_file_content
 
 
-def solution(tablet: str) -> int:
-    was = {}
+def find_sum_of_correct_numbers(tablet: str) -> int:
+    was_number = {}
     content = []
 
     for number in map(int, tablet.split()):
-        if number in was:
-            for n in content[was[number] + 1:]:
-                del was[n]
+        if number in was_number:
+            for incorrect_number in content[was_number[number] + 1 :]:
+                del was_number[incorrect_number]
 
-            content = content[: was[number]]
+            content = content[: was_number[number]]
         else:
-            was[number] = len(content)
+            was_number[number] = len(content)
 
         content.append(number)
 
     return sum(content)
 
 
-assert solution("1 4 3 2 4 7 2 6 3 6") == 20
+assert find_sum_of_correct_numbers("1 4 3 2 4 7 2 6 3 6") == 20
 
-print("Solution", solution(get_file_content("input03.txt")))
+print("Solution", find_sum_of_correct_numbers(get_file_content("input03.txt")))
