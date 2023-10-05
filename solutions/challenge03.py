@@ -39,8 +39,8 @@ def find_start_position(room_map: set) -> Tuple[int, int]:
     row_index = column_index = len(room_map)
 
     for current_row_index, column_index in room_map:
-        column_index = min(column_index, current_row_index)
         row_index = min(row_index, current_row_index)
+        column_index = min(column_index, current_row_index)
 
     return row_index, column_index
 
