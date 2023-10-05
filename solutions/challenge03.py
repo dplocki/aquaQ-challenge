@@ -11,14 +11,12 @@ TEXT_ROOM_MAP = """  ##
 
 
 def text_room_map_converter(text_map: [str]) -> dict:
-    result = set()
-
-    for row_index, line in enumerate(text_map):
-        for column_index, character in enumerate(line):
-            if character == "#":
-                result.add((row_index, column_index))
-
-    return result
+    return set(
+        (row_index, column_index)
+        for row_index, line in enumerate(text_map)
+        for column_index, character in enumerate(line)
+        if character == "#"
+    )
 
 
 def calculate_new_position(position: Tuple[int, int], instruction) -> Tuple[int, int]:
