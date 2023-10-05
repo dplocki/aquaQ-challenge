@@ -15,4 +15,4 @@ def find_sum_of_correct_numbers(tablet: str) -> int:
 
 assert find_sum_of_correct_numbers("1 4 3 2 4 7 2 6 3 6") == 20
 
-print("Solution", find_sum_of_correct_numbers(get_file_content("input03.txt")))
+print("Solution", find_sum_of_correct_numbers(get_file_content("input02.txt")))
