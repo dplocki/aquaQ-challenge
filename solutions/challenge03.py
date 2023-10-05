@@ -1,38 +1,39 @@
 from utils import get_file_content
 
-TEXT_ROOM_MAP = '''  ##
+TEXT_ROOM_MAP = """  ##
  ####
 ######
 ######
  ####
   ##
-'''.splitlines()
+""".splitlines()
+
 
 def text_room_map_converter(text_map: [str]) -> dict:
     result = set()
 
     for row_index, line in enumerate(text_map):
         for column_index, character in enumerate(line):
-            if character == '#':
+            if character == "#":
                 result.add((row_index, column_index))
 
     return result
 
 
 def calculate_new_position(position, instruction):
-    if instruction == 'U':
+    if instruction == "U":
         return (position[0] - 1, position[1])
 
-    if instruction == 'D':
+    if instruction == "D":
         return (position[0] + 1, position[1])
 
-    if instruction == 'L':
+    if instruction == "L":
         return (position[0], position[1] - 1)
 
-    if instruction == 'R':
+    if instruction == "R":
         return (position[0], position[1] + 1)
 
-    raise Exception(f'Unknown instruction {instruction}')
+    raise Exception(f"Unknown instruction {instruction}")
 
 
 def walk(room_map: set, instructions: str) -> int:
@@ -53,6 +54,7 @@ def solution(instructions):
 
     return result
 
-assert solution('UDRR') == 14
+
+assert solution("UDRR") == 14
 
 print("Solution", solution(get_file_content("input03.txt")))

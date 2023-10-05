@@ -6,7 +6,7 @@ def find_sum_of_correct_numbers(tablet: str) -> int:
 
     for number in map(int, tablet.split()):
         if number in content:
-            content = content[:content.index(number)]
+            content = content[: content.index(number)]
 
         content.append(number)
 
