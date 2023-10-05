@@ -1,3 +1,4 @@
+from typing import Tuple
 from utils import get_file_content
 
 TEXT_ROOM_MAP = """  ##
@@ -20,7 +21,7 @@ def text_room_map_converter(text_map: [str]) -> dict:
     return result
 
 
-def calculate_new_position(position, instruction):
+def calculate_new_position(position: Tuple[int, int], instruction) -> Tuple[int, int]:
     if instruction == "U":
         return (position[0] - 1, position[1])
 
@@ -47,12 +48,11 @@ def walk(room_map: set, instructions: str) -> int:
         yield position
 
 
-def solution(instructions):
-    result = 0
-    for column, row in walk(text_room_map_converter(TEXT_ROOM_MAP), instructions):
-        result += column + row
-
-    return result
+def solution(instructions: str) -> int:
+    return sum(
+        column + row
+        for column, row in walk(text_room_map_converter(TEXT_ROOM_MAP), instructions)
+    )
 
 
 assert solution("UDRR") == 14
