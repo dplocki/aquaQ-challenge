@@ -13,7 +13,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 0     | 1.7     | `stringProc`  | [What's a numpad?](./solutions/challenge00.py)|
 | 1     | 1.6     | `stringProc`  | [Rose by any other name](./solutions/challenge01.py)|
 | 2     | 2.6     | `listOps`     | [One is all you need](./solutions/challenge02.py)|
-| 3     | 3.1     | `paths+graphs`| Short walks                           |
+| 3     | 3.1     | `paths+graphs`| [Short walks](./solutions/challenge03.py)|
 | 4     | 3.8     | `maths`       | This is good co-primen                |
 | 5     | 3.7     | `stateMgmt`   | Snake eyes                            |
 | 6     | 3.6     | `permutation` | Let me count the ways                 |
