@@ -1,7 +1,7 @@
 from utils import get_file_content
 
 
-def rotate(dice, direction):
+def rotate(dice: list[str], direction: str) -> list[str]:
     if direction in 'UD':
         dice[0], dice[2] = dice[2], dice[0]
     elif direction in 'LR':
