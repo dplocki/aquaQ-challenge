@@ -15,7 +15,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 2     | 2.6     | `listOps`     | [One is all you need](./solutions/challenge02.py)|
 | 3     | 3.1     | `paths+graphs`| [Short walks](./solutions/challenge03.py)|
 | 4     | 3.8     | `maths`       | [This is good co-primen](./solutions/challenge04.py)|
-| 5     | 3.7     | `stateMgmt`   | Snake eyes                            |
+| 5     | 3.7     | `stateMgmt`   | [Snake eyes](./solutions/challenge05.py)|
 | 6     | 3.6     | `permutation` | Let me count the ways                 |
 | 7     | 4.0     | `maths`       | What is best in life?                 |
 | 8     | 5.9     | `stateMgmt`   | Cron Flakes                           |
