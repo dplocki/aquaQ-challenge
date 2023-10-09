@@ -2,9 +2,9 @@ from utils import get_file_content
 
 
 def rotate(dice: list[str], direction: str) -> list[str]:
-    if direction in 'UD':
+    if direction in "UD":
         dice[0], dice[2] = dice[2], dice[0]
-    elif direction in 'LR':
+    elif direction in "LR":
         dice[0], dice[1] = dice[1], dice[0]
 
     return dice
@@ -28,4 +28,4 @@ def solution(instruction: str) -> int:
 
 assert solution("LRDLU") == 5
 
-print("Solution", solution(get_file_content('input05.txt')))
+print("Solution", solution(get_file_content("input05.txt")))

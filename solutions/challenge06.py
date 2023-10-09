@@ -10,15 +10,15 @@ def find_combination_of_sum(n: int):
 def solution(n: int) -> int:
     result = 0
     for item in find_combination_of_sum(n):
-        result += str(item).count('1')
+        result += str(item).count("1")
 
     return result
 
 
 def get_number_from_input(text: str) -> int:
-    return int(text.split(' ')[-1])
+    return int(text.split(" ")[-1])
 
 
 assert solution(3) == 9
 
-print('Solution', solution(get_number_from_input(get_file_content('input06.txt'))))
+print("Solution", solution(get_number_from_input(get_file_content("input06.txt"))))
