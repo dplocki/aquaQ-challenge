@@ -1,7 +1,8 @@
+from typing import Generator, Tuple
 from utils import get_file_content
 
 
-def get_data(content: str):
+def get_data(content: str) -> Generator[Tuple[str, int, str, int], None, None]:
     lines = content.splitlines()
 
     for line in lines[1:]:
@@ -11,15 +12,15 @@ def get_data(content: str):
         yield first_player, first_player_points, second_player, second_player_points
 
 
-def calculate_rate(ra, rb):
+def calculate_rate(ra: float, rb: float) -> float:
     return 1 / (1 + 10 ** ((rb - ra) / 400))
 
 
-def update_rating(rate):
+def update_rating(rate: float) -> float:
     return 20 * (1 - rate)
 
 
-def run_make(file_name: str):
+def run_make(file_name: str) -> dict[str, int]:
     score_table = {}
 
     for (
@@ -44,7 +45,7 @@ def run_make(file_name: str):
     return score_table
 
 
-def solution(file_name: str):
+def solution(file_name: str) -> int:
     score_table = run_make(file_name)
 
     scores = score_table.values()
