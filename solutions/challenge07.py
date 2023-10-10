@@ -53,4 +53,4 @@ def solution(file_name: str) -> int:
     return int(max(scores)) - int(min(scores))
 
 
-print("Solution", solution("input07.txt"))
+print("Solution", solution("input07.csv"))
