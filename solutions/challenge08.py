@@ -2,7 +2,7 @@ from typing import Generator, Tuple
 from utils import get_file_content
 
 
-def get_data(content: str) -> Generator[Tuple[str, int, str, int], None, None]:
+def get_data(content: str) -> Generator[Tuple[int, int, int], None, None]:
     lines = content.splitlines()
 
     for day_id, line in enumerate(lines[1:]):
@@ -10,7 +10,7 @@ def get_data(content: str) -> Generator[Tuple[str, int, str, int], None, None]:
         yield day_id, int(cells[1]), int(cells[2])
 
 
-def solution(content):
+def solution(content: int) -> int:
     own_milk = {}
     own_cereal = 0
 
