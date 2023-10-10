@@ -18,7 +18,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 5     | 3.7     | `stateMgmt`   | [Snake eyes](./solutions/challenge05.py)|
 | 6     | 3.6     | `permutation` | [Let me count the ways](./solutions/challenge06.py)|
 | 7     | 4.0     | `maths`       | [What is best in life?](./solutions/challenge07.py)|
-| 8     | 5.9     | `stateMgmt`   | Cron Flakes                           |
+| 8     | 5.9     | `stateMgmt`   | [Cron Flakes](./solutions/challenge08.py)|
 | 9     | 4.2     | `maths`       | Big Data?                             |
 | 10    | 5.8     | `paths+graphs`| Troll Toll                            |
 | 11    | 5.4     | `listOps`     | Boxed In                              |
