@@ -1,14 +1,12 @@
-from typing import Generator, Tuple
-from utils import get_file_content
+from typing import Generator, Iterator, Tuple
+from utils import get_file_content, parse_as_csv_content
 
 
-def get_data(content: str) -> Generator[Tuple[str, int, str, int], None, None]:
-    lines = content.splitlines()
-
-    for line in lines[1:]:
-        first_player, second_player, score = line.split(",")
+def parse_wrapper(
+    source: Iterator[Tuple],
+) -> Generator[Tuple[str, int, str, int], None, None]:
+    for first_player, second_player, score in source:
         first_player_points, second_player_points = map(int, score.split("-"))
-
         yield first_player, first_player_points, second_player, second_player_points
 
 
@@ -28,7 +26,7 @@ def run_make(file_name: str) -> dict[str, int]:
         first_player_points,
         second_player,
         second_player_points,
-    ) in get_data(get_file_content(file_name)):
+    ) in parse_wrapper(parse_as_csv_content(get_file_content(file_name))):
 
         ra = score_table.get(first_player, 1200)
         rb = score_table.get(second_player, 1200)
