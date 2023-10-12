@@ -1,9 +1,4 @@
-from utils import get_file_content
-
-
-def parse_as_csv_content(content: str):
-    for line in content.splitlines()[1:]:
-        yield line.split(',')
+from utils import get_file_content, parse_as_csv_content
 
 
 def parse_wrapper(source):
