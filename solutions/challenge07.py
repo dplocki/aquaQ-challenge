@@ -18,7 +18,7 @@ def update_rating(rate: float) -> float:
     return 20 * (1 - rate)
 
 
-def run_make(file_name: str) -> dict[str, int]:
+def run_make(content: str) -> dict[str, int]:
     score_table = {}
 
     for (
@@ -26,7 +26,7 @@ def run_make(file_name: str) -> dict[str, int]:
         first_player_points,
         second_player,
         second_player_points,
-    ) in parse_wrapper(parse_as_csv_content(get_file_content(file_name))):
+    ) in parse_wrapper(parse_as_csv_content(content)):
 
         ra = score_table.get(first_player, 1200)
         rb = score_table.get(second_player, 1200)
@@ -51,4 +51,4 @@ def solution(file_name: str) -> int:
     return int(max(scores)) - int(min(scores))
 
 
-print("Solution", solution("input07.csv"))
+print("Solution", solution(get_file_content("input07.csv")))
