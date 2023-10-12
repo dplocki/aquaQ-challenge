@@ -1,20 +1,17 @@
-from typing import Generator, Tuple
-from utils import get_file_content
+from typing import Generator, Iterator, Tuple
+from utils import get_file_content, parse_as_csv_content
 
 
-def get_data(content: str) -> Generator[Tuple[int, int, int], None, None]:
-    lines = content.splitlines()
-
-    for day_id, line in enumerate(lines[1:]):
-        cells = line.split(",")
+def parse_wrapper(source: Iterator[Tuple]) -> Generator[Tuple[int, int, int], None, None]:
+    for day_id, cells in enumerate(source):
         yield day_id, int(cells[1]), int(cells[2])
 
 
-def solution(content: int) -> int:
+def solution(content: str) -> int:
     own_milk = {}
     own_cereal = 0
 
-    for day_id, milk, bought_cereal in get_data(content):
+    for day_id, milk, bought_cereal in parse_wrapper(parse_as_csv_content(content)):
         own_cereal += bought_cereal
 
         if own_cereal >= 100 and sum(own_milk.values()) >= 100:
