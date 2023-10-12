@@ -1,7 +1,10 @@
+from typing import Generator, Iterator, Tuple
 from utils import get_file_content, parse_as_csv_content
 
 
-def parse_wrapper(source):
+def parse_wrapper(
+    source: Iterator[Tuple],
+) -> Generator[Tuple[str, str, int], None, None]:
     for user_a, user_b, cost in source:
         yield user_a.strip(), user_b.strip(), int(cost)
 
@@ -24,19 +27,30 @@ def solution(content: str, _from: str, _to: str) -> int:
 
         for user in users:
             if (user, current) in graph:
-                if cost_so_far.get(user, 9999999999999) > graph[user, current] + current_cost:
-                    cost_so_far[user] = graph[user, current] + current_cost
-                    possibilities.append((user, graph[user, current] + current_cost))
+                new_cost = graph[user, current] + current_cost
+                if user not in cost_so_far or cost_so_far[user] > new_cost:
+                    cost_so_far[user] = new_cost
+                    possibilities.append((user, new_cost))
 
     return cost_so_far[_to]
 
 
-assert solution('''s,d,c
+assert (
+    solution(
+        """s,d,c
 A, B, 8
 B, C, 50
 B, D, 5
 D, E, 10
-E, C, 6''', 'A', 'C') == 29
+E, C, 6""",
+        "A",
+        "C",
+    )
+    == 29
+)
 
 
-print('Solution', solution(get_file_content('input10.csv'), 'Tupac'.upper(), 'Diddy'.upper()))
+print(
+    "Solution",
+    solution(get_file_content("input10.csv"), "Tupac".upper(), "Diddy".upper()),
+)
