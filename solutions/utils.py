@@ -8,4 +8,4 @@ def get_file_content(file_name: str) -> str:
 
 def parse_as_csv_content(content: str) -> Generator[Tuple, None, None]:
     for line in content.splitlines()[1:]:
-        yield line.split(',')
+        yield line.split(",")
