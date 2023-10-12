@@ -2,7 +2,9 @@ from typing import Generator, Iterator, Tuple
 from utils import get_file_content, parse_as_csv_content
 
 
-def parse_wrapper(source: Iterator[Tuple]) -> Generator[Tuple[int, int, int], None, None]:
+def parse_wrapper(
+    source: Iterator[Tuple],
+) -> Generator[Tuple[int, int, int], None, None]:
     for day_id, cells in enumerate(source):
         yield day_id, int(cells[1]), int(cells[2])
 
