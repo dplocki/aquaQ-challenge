@@ -1,7 +1,7 @@
 from utils import get_file_content
 
 
-def get_csv_file_content(content: str):
+def parse_as_csv_content(content: str):
     for line in content.splitlines()[1:]:
         yield line.split(',')
 
@@ -15,7 +15,7 @@ def solution(content: str, _from: str, _to: str) -> int:
     graph = {}
     users = set()
 
-    for user_a, user_b, cost in parse_wrapper(get_csv_file_content(content)):
+    for user_a, user_b, cost in parse_wrapper(parse_as_csv_content(content)):
         graph[user_a, user_b] = cost
         graph[user_b, user_a] = cost
         users.add(user_a)
