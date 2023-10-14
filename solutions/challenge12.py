@@ -2,10 +2,11 @@ from utils import get_file_content
 
 
 def solution(content: str) -> int:
+    instructions = list(
+        map(tuple, map(lambda line: map(int, line.split(" ")), content.splitlines()))
+    )
 
-    instructions = list(map(lambda x: tuple(map(int, x.split(' '))), content.splitlines()))
     instructions_max = len(instructions)
-
     direction = 1
     floor = 0
     visited_floors = 1
@@ -18,6 +19,6 @@ def solution(content: str) -> int:
     return visited_floors
 
 
-assert solution('1 2\n0 3\n1 1\n0 1\n1 5') == 7
+assert solution("1 2\n0 3\n1 1\n0 1\n1 5") == 7
 
-print('Solution', solution(get_file_content('input12.txt')))
+print("Solution", solution(get_file_content("input12.txt")))
