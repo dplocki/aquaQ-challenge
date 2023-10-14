@@ -11,7 +11,7 @@ def solution(content: str) -> int:
     floor = 0
     visited_floors = 1
 
-    while floor >= 0 and floor < instructions_max:
+    while 0 <= floor < instructions_max:
         direction = direction * -1 if instructions[floor][0] == 0 else direction
         floor += direction * instructions[floor][1]
         visited_floors += 1
