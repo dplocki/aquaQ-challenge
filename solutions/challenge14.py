@@ -3,20 +3,21 @@ from utils import get_file_content
 
 
 def load_grid(content: str):
-    result = {}
-
-    for row_index, line in enumerate(content.splitlines()):
-        for column_index, number in enumerate(line.split()):
-            result[int(number)] = (row_index, column_index)
-
-    return result
+    return {
+        int(number): (row_index, column_index)
+        for row_index, line in enumerate(content.splitlines())
+        for column_index, number in enumerate(line.split())
+    }
 
 
-GRID = load_grid('''6  17 34 50 68
+GRID_SIZE = 5
+GRID = load_grid(
+    """6  17 34 50 68
 10 21 45 53 66
 5  25 36 52 69
 14 30 33 54 63
-15 23 41 51 62''')
+15 23 41 51 62"""
+)
 
 
 def check_numbers(numbers):
@@ -36,20 +37,30 @@ def check_numbers(numbers):
         if row == column:
             diagonal_equal_coordinates += 1
 
-        if row + column == 4:
+        if row + column + 1 == GRID_SIZE:
             diagonal_coordinates_equal_to_size += 1
 
-        if (5 in rows.values()) or (5 in columns.values()) or diagonal_equal_coordinates == 5 or diagonal_coordinates_equal_to_size == 5:
+        if (
+            (GRID_SIZE in rows.values())
+            or (GRID_SIZE in columns.values())
+            or diagonal_equal_coordinates == GRID_SIZE
+            or diagonal_coordinates_equal_to_size == GRID_SIZE
+        ):
             return index + 1
 
     return 0
 
 
 def solution(content: str) -> int:
-    return sum(map(check_numbers, map(lambda line: map(int, line.split()), content.splitlines())))
+    return sum(
+        map(
+            check_numbers,
+            map(lambda line: map(int, line.split()), content.splitlines()),
+        )
+    )
 
 
 assert check_numbers([10, 5, 21, 45, 53, 70, 66, 4]) == 7
 
 
-print('Solution', solution(get_file_content('input14.txt')))
+print("Solution", solution(get_file_content("input14.txt")))
