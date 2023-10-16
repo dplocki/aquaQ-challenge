@@ -20,31 +20,31 @@ GRID = load_grid(
 )
 
 
-def check_numbers(numbers):
+def check_numbers(grid_size, grid, numbers):
     rows = defaultdict(int)
     columns = defaultdict(int)
     diagonal_equal_coordinates = 0
     diagonal_coordinates_equal_to_size = 0
 
     for index, number in enumerate(numbers):
-        if number not in GRID:
+        if number not in grid:
             continue
 
-        row, column = GRID[number]
+        row, column = grid[number]
         rows[row] += 1
         columns[column] += 1
 
         if row == column:
             diagonal_equal_coordinates += 1
 
-        if row + column + 1 == GRID_SIZE:
+        if row + column + 1 == grid_size:
             diagonal_coordinates_equal_to_size += 1
 
         if (
-            (GRID_SIZE in rows.values())
-            or (GRID_SIZE in columns.values())
-            or diagonal_equal_coordinates == GRID_SIZE
-            or diagonal_coordinates_equal_to_size == GRID_SIZE
+            (grid_size in rows.values())
+            or (grid_size in columns.values())
+            or diagonal_equal_coordinates == grid_size
+            or diagonal_coordinates_equal_to_size == grid_size
         ):
             return index + 1
 
@@ -54,13 +54,12 @@ def check_numbers(numbers):
 def solution(content: str) -> int:
     return sum(
         map(
-            check_numbers,
+            lambda numbers: check_numbers(GRID_SIZE, GRID, numbers),
             map(lambda line: map(int, line.split()), content.splitlines()),
         )
     )
 
 
-assert check_numbers([10, 5, 21, 45, 53, 70, 66, 4]) == 7
-
+assert check_numbers(GRID_SIZE, GRID, [10, 5, 21, 45, 53, 70, 66, 4]) == 7
 
 print("Solution", solution(get_file_content("input14.txt")))
