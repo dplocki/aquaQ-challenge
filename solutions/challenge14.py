@@ -1,3 +1,4 @@
+from collections import defaultdict
 from utils import get_file_content
 
 
@@ -18,34 +19,28 @@ GRID = load_grid('''6  17 34 50 68
 15 23 41 51 62''')
 
 
-def check_winning(found_number):
-    rows = {}
-    columns = {}
+def check_numbers(numbers):
+    rows = defaultdict(int)
+    columns = defaultdict(int)
     diagonal_equal_coordinates = 0
     diagonal_coordinates_equal_to_size = 0
 
-    for row, column in found_number:
-        rows[row] = rows.get(row, 0) + 1
-        columns[column] = rows.get(column, 0) + 1
+    for index, number in enumerate(numbers):
+        if number not in GRID:
+            continue
+
+        row, column = GRID[number]
+        rows[row] += 1
+        columns[column] += 1
 
         if row == column:
             diagonal_equal_coordinates += 1
 
-        if row + column == 5:
+        if row + column == 4:
             diagonal_coordinates_equal_to_size += 1
 
-    return (5 in rows.values()) or (5 in columns.values()) or diagonal_equal_coordinates == 5 or diagonal_coordinates_equal_to_size == 5
-
-
-def check_numbers(numbers):
-    found_numbers = set()
-
-    for index, number in enumerate(numbers):
-        if number in GRID:
-            found_numbers.add(GRID[number])
-
-            if check_winning(found_numbers):
-                return index + 1
+        if (5 in rows.values()) or (5 in columns.values()) or diagonal_equal_coordinates == 5 or diagonal_coordinates_equal_to_size == 5:
+            return index + 1
 
     return 0
 
