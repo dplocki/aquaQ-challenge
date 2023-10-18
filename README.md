@@ -25,7 +25,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 12    | 3.6     | `listOps`     | [A Day In The Lift](./solutions/challenge12.py)|
 | 13    | 5.9     | `listOps`     | [O RLE?](./solutions/challenge13.py)  |
 | 14    | 5.2     | `paths+graphs`| [That's a bingo](./solutions/challenge14.py)|
-| 15    | 5.6     | `paths+graphs`| word wore more mare maze              |
+| 15    | 5.6     | `paths+graphs`| [word wore more mare maze](./solutions/challenge15.py)|
 | 16    | 6.1     | `stringProc`  | Keming                                |
 | 17    | 3.6     | `stateMgmt`   | The Beautiful Shame                   |
 | 18    | 4.6     | `maths`       | Emit time                             |
