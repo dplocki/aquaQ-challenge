@@ -1,5 +1,4 @@
 from collections import defaultdict, deque
-from heapq import heappop, heappush
 from utils import get_file_content
 
 WORDS = defaultdict(list)
@@ -15,23 +14,30 @@ def words_difference(first_word: str, second_word: str) -> int:
 def is_words_single_characters_difference(first_word: str, second_word: str):
     return words_difference(first_word, second_word) == 1
 
+def index_of_words_difference(first_word: str, second_word: str) -> int:
+    for index, (f, s) in enumerate(zip(first_word, second_word)):
+        if f != s:
+            return index
+
+    return -1
+
 
 def find_the_shortest_path(start_word: str, end_word: str) -> int:
     word_size = len(start_word)
-
-    possibilities = [ ]
-    heappush(possibilities, (words_difference(start_word, end_word), [start_word]))
+    was = set()
+    possibilities = deque([(start_word, 0)])
 
     while possibilities:
-        _, path = heappop(possibilities)
-        last_word = path[-1]
+        word, step = possibilities.popleft()
+        if word not in was:
+            was.add(word)
 
-        if last_word == end_word:
-            return len(path)
+            if word == end_word:
+                return step + 1
 
-        for word in WORDS[word_size]:
-            if is_words_single_characters_difference(last_word, word) and word not in path:
-                heappush(possibilities, (words_difference(word, end_word), path + [word]))
+            for neighbor in WORDS[word_size]:
+                if not neighbor in was and words_difference(word, neighbor) == 1:
+                    possibilities.append((neighbor, step + 1))
 
     raise Exception('Not found')
 
