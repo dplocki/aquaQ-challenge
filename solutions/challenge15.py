@@ -21,7 +21,7 @@ def find_the_shortest_path(
     wordbook: Dict[str, list], start_word: str, end_word: str
 ) -> int:
     was = set()
-    possibilities = deque([(start_word, 0)])
+    possibilities = deque([(start_word, 1)])
 
     while possibilities:
         word, step = possibilities.popleft()
@@ -29,7 +29,7 @@ def find_the_shortest_path(
             was.add(word)
 
             if word == end_word:
-                return step + 1
+                return step
 
             for template in get_template_for_word(word):
                 for neighbor in wordbook[template]:
