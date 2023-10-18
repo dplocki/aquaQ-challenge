@@ -1,29 +1,19 @@
 from collections import defaultdict, deque
 from utils import get_file_content
 
+
+def get_template_for_word(word: str):
+    yield from (word[:i] + '_' + word[i + 1:] for i in range(len(word)))
+
+
 WORDS = defaultdict(list)
 
 for word in get_file_content('validwords15.txt').splitlines():
-    WORDS[len(word)].append(word)
-
-
-def words_difference(first_word: str, second_word: str) -> int:
-    return sum(0 if f == s else 1 for f, s in zip(first_word, second_word))
-
-
-def is_words_single_characters_difference(first_word: str, second_word: str):
-    return words_difference(first_word, second_word) == 1
-
-def index_of_words_difference(first_word: str, second_word: str) -> int:
-    for index, (f, s) in enumerate(zip(first_word, second_word)):
-        if f != s:
-            return index
-
-    return -1
+    for template in get_template_for_word(word):
+        WORDS[template].append(word)
 
 
 def find_the_shortest_path(start_word: str, end_word: str) -> int:
-    word_size = len(start_word)
     was = set()
     possibilities = deque([(start_word, 0)])
 
@@ -35,9 +25,10 @@ def find_the_shortest_path(start_word: str, end_word: str) -> int:
             if word == end_word:
                 return step + 1
 
-            for neighbor in WORDS[word_size]:
-                if not neighbor in was and words_difference(word, neighbor) == 1:
-                    possibilities.append((neighbor, step + 1))
+            for template in get_template_for_word(word):
+                for neighbor in WORDS[template]:
+                    if not neighbor in was:
+                        possibilities.append((neighbor, step + 1))
 
     raise Exception('Not found')
 
@@ -51,11 +42,6 @@ def solution(content: str) -> int:
 
     return result
 
-
-assert is_words_single_characters_difference('fly', 'fly') == False
-assert is_words_single_characters_difference('fly', 'fry') == True
-assert is_words_single_characters_difference('fly', 'try') == False
-assert is_words_single_characters_difference('fly', 'trx') == False
 
 assert find_the_shortest_path('word', 'maze') == 5
 
