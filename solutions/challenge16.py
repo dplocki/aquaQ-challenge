@@ -11,7 +11,7 @@ def split_letters(lines: Iterable[str]):
     return zip(*args)
 
 
-def map_glyph(lines: [str]) -> set:
+def map_glyph(lines: Iterable[str]) -> set:
     return set(
         (row_index, column_index)
         for row_index, line in enumerate(lines)
@@ -20,19 +20,13 @@ def map_glyph(lines: [str]) -> set:
     )
 
 
-def display(pixels: set):
+def display(pixels: set) -> str:
     max_column = max(column for _, column in pixels) + 1
-    result = ""
-    for row in range(6):
-        for column in range(max_column):
-            if (row, column) in pixels:
-                result += "#"
-            else:
-                result += "."
 
-        result += "\n"
-
-    return result
+    return "\n".join(
+        "".join("#" if (row, column) in pixels else "." for column in range(max_column))
+        for row in range(GLYPH_HEIGHT)
+    )
 
 
 def make_ascii_text(glyphs: dict, text: str) -> set:
@@ -61,16 +55,16 @@ def count_negative_space(pixels: set) -> int:
 
 
 def solution(text: str) -> int:
-    return count_negative_space(make_ascii_text(text))
+    glyphs = {
+        letter: map_glyph(glyph)
+        for letter, glyph in zip(
+            ascii_uppercase,
+            split_letters(get_file_raw_content("asciialphabet16.txt").splitlines()),
+        )
+    }
 
+    return count_negative_space(make_ascii_text(glyphs, text))
 
-glyphs = {
-    letter: map_glyph(glyph)
-    for letter, glyph in zip(
-        ascii_uppercase,
-        split_letters(get_file_raw_content("asciialphabet16.txt").splitlines()),
-    )
-}
 
 assert solution("LTA") == 53
 
