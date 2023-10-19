@@ -1,3 +1,4 @@
+from typing import Iterable
 from utils import get_file_content, get_file_raw_content
 from string import ascii_uppercase
 
@@ -5,43 +6,36 @@ from string import ascii_uppercase
 GLYPH_HEIGHT = 6
 
 
-def split_letters(lines):
+def split_letters(lines: Iterable[str]):
     args = [iter(lines)] * GLYPH_HEIGHT
     return zip(*args)
 
 
 def map_glyph(lines: [str]) -> set:
-    glyph = set()
-
-    for row_index, line in enumerate(lines):
-        for column_index, character in enumerate(line):
-            if character == '#':
-                glyph.add((row_index, column_index))
-
-    return glyph
+    return set(
+        (row_index, column_index)
+        for row_index, line in enumerate(lines)
+        for column_index, character in enumerate(line)
+        if character == "#"
+    )
 
 
 def display(pixels: set):
     max_column = max(column for _, column in pixels) + 1
-    result = ''
+    result = ""
     for row in range(6):
         for column in range(max_column):
             if (row, column) in pixels:
-                result += '#'
+                result += "#"
             else:
-                result += '.'
+                result += "."
 
-        result += '\n'
+        result += "\n"
 
     return result
 
-glyphs = {
-    letter: map_glyph(glyph)
-    for letter, glyph in zip(ascii_uppercase, split_letters(get_file_raw_content('asciialphabet16.txt').splitlines()))
-}
 
-
-def make_ascii_text(text: str):
+def make_ascii_text(glyphs: dict, text: str) -> set:
     pixels = set()
 
     cursor = -1
@@ -54,7 +48,9 @@ def make_ascii_text(text: str):
                 potential_letter.add((row, column + cursor))
 
             if pixels.isdisjoint(potential_letter):
-                pixels.update(set((row, column + cursor) for row, column in glyphs[letter]))
+                pixels.update(
+                    set((row, column + cursor) for row, column in glyphs[letter])
+                )
                 break
 
     return pixels
@@ -68,6 +64,14 @@ def solution(text: str) -> int:
     return count_negative_space(make_ascii_text(text))
 
 
-assert solution('LTA') == 53
+glyphs = {
+    letter: map_glyph(glyph)
+    for letter, glyph in zip(
+        ascii_uppercase,
+        split_letters(get_file_raw_content("asciialphabet16.txt").splitlines()),
+    )
+}
 
-print('Solution', solution(get_file_content('input16.txt')))
+assert solution("LTA") == 53
+
+print("Solution", solution(get_file_content("input16.txt")))
