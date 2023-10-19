@@ -2,8 +2,11 @@ from utils import get_file_content, get_file_raw_content
 from string import ascii_uppercase
 
 
+GLYPH_HEIGHT = 6
+
+
 def split_letters(lines):
-    args = [iter(lines)] * 6
+    args = [iter(lines)] * GLYPH_HEIGHT
     return zip(*args)
 
 
@@ -49,7 +52,6 @@ def make_ascii_text(text: str):
             for row, column in glyphs[letter]:
                 potential_letter.add((row, column + cursor - 1))
                 potential_letter.add((row, column + cursor))
-                potential_letter.add((row, column + cursor + 1))
 
             if pixels.isdisjoint(potential_letter):
                 pixels.update(set((row, column + cursor) for row, column in glyphs[letter]))
@@ -59,9 +61,13 @@ def make_ascii_text(text: str):
 
 
 def count_negative_space(pixels: set) -> int:
-    return 6 * (max(column for _, column in pixels) + 1) - len(pixels)
+    return GLYPH_HEIGHT * (max(column for _, column in pixels) + 1) - len(pixels)
 
 
-assert count_negative_space(make_ascii_text('LTA')) == 53
+def solution(text: str) -> int:
+    return count_negative_space(make_ascii_text(text))
 
-print('Solution', count_negative_space(make_ascii_text(get_file_content('input16.txt'))))
+
+assert solution('LTA') == 53
+
+print('Solution', solution(get_file_content('input16.txt')))
