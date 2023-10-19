@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Tuple
 from utils import get_file_content, get_file_raw_content
 from string import ascii_uppercase
 
@@ -6,7 +6,7 @@ from string import ascii_uppercase
 GLYPH_HEIGHT = 6
 
 
-def split_letters(lines: Iterable[str]):
+def split_to_glyphs(lines: Iterable[str]) -> Tuple:
     args = [iter(lines)] * GLYPH_HEIGHT
     return zip(*args)
 
@@ -59,7 +59,7 @@ def solution(text: str) -> int:
         letter: map_glyph(glyph)
         for letter, glyph in zip(
             ascii_uppercase,
-            split_letters(get_file_raw_content("asciialphabet16.txt").splitlines()),
+            split_to_glyphs(get_file_raw_content("asciialphabet16.txt").splitlines()),
         )
     }
 
