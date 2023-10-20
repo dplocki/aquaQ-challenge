@@ -21,7 +21,7 @@ def parse_wrapper(
         yield date.fromisoformat(match_date), away_team, int(away_score)
 
 
-def get_shameful_strick(source: Iterator[Tuple]):
+def get_shameful_strick(source: Iterator[Tuple[date, str, int]]) -> Generator[Tuple[int, str, date, date], None, None]:
     memory = {}
 
     for date, team, score in parse_wrapper(source):
@@ -33,15 +33,11 @@ def get_shameful_strick(source: Iterator[Tuple]):
 
 
 def solution(content: str) -> str:
-    s = 0
-    p = None
+    the_most_shameful_team = max(
+        get_shameful_strick(parse_as_csv_content(content)), key=lambda i: i[0]
+    )
 
-    for i in get_shameful_strick(parse_as_csv_content(content)):
-        if i[0] > s:
-            p = i
-            s = i[0]
-
-    return f'{p[1]} {date.strftime(p[2], "%Y%m%d")} {date.strftime(p[3], "%Y%m%d")}'
+    return f'{the_most_shameful_team[1]} {date.strftime(the_most_shameful_team[2], "%Y%m%d")} {date.strftime(the_most_shameful_team[3], "%Y%m%d")}'
 
 
 print("Solution:", solution(get_file_content("input17.csv")))
