@@ -2,6 +2,10 @@ from typing import Callable
 from utils import get_file_content
 
 
+def to_second(hour: int, minute: int, second: int) -> int:
+    return hour * 60 * 60 + minute * 60 + second
+
+
 def is_hour_palindromic(hour: int, minute: int, second: int) -> bool:
     if minute % 11 != 0:
         return False
@@ -11,22 +15,22 @@ def is_hour_palindromic(hour: int, minute: int, second: int) -> bool:
 
 def attach_palindromic_hours(func: Callable) -> Callable:
     palindromic_hours = [
-        hour * 60 * 60 + minute * 60 + second
+        to_second(hour, minute, second)
         for hour in range(24)
         for minute in range(60)
         for second in range(60)
         if is_hour_palindromic(hour, minute, second)
     ]
-    palindromic_hours += [palindromic_hours[0] + 24 * 60 * 60]
+    palindromic_hours += [to_second(24, 0, palindromic_hours[0])]
 
     def inner(time_representation):
         return func(palindromic_hours, time_representation)
 
     return inner
 
+
 def str_time_to_seconds(time_representation: str) -> int:
-    hour, minute, second = map(int, time_representation.split(":"))
-    return hour * 60 * 60 + minute * 60 + second
+    return to_second(*map(int, time_representation.split(":")))
 
 
 @attach_palindromic_hours
