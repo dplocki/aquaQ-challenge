@@ -28,7 +28,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 15    | 5.6     | `paths+graphs`| [word wore more mare maze](./solutions/challenge15.py)|
 | 16    | 6.1     | `stringProc`  | [Keming](./solutions/challenge16.py)  |
 | 17    | 3.6     | `stateMgmt`   | [The Beautiful Shame](./solutions/challenge17.py)|
-| 18    | 4.6     | `maths`       | Emit time                             |
+| 18    | 4.6     | `maths`       | [Emit time](./solutions/challenge18.py)|
 | 19    | 5.8     | `stateMgmt`   | It's alive                            |
 | 20    | 3.6     | `stateMgmt`   | Blackjack                             |
 | 21    | 4.0     | `paths+graphs`| Clean Sweep                           |
