@@ -14,7 +14,8 @@ palindromic_hours = [
     for minute in range(60)
     for second in range(60)
     if is_hour_palindromic(hour, minute, second)
-] + [24 * 60 * 60]
+]
+palindromic_hours += [palindromic_hours[0] + 24 * 60 * 60]
 
 
 def str_time_to_seconds(time_representation: str) -> int:
@@ -28,13 +29,10 @@ def find_nearest_palindromic(time_representation: str):
     return min(abs(time - t) for t in palindromic_hours)
 
 
-assert find_nearest_palindromic("13:41:00") == 211
+def solution(content: str) -> int:
+    return sum(find_nearest_palindromic(line) for line in content.splitlines())
 
 
-print(
-    "Solution",
-    sum(
-        find_nearest_palindromic(line)
-        for line in get_file_content("input18.txt").splitlines()
-    ),
-)
+assert solution("13:41:00") == 211
+
+print("Solution", solution(get_file_content("input18.txt")))
