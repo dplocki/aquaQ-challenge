@@ -34,7 +34,9 @@ def str_time_to_seconds(time_representation: str) -> int:
 
 
 @attach_palindromic_hours
-def find_nearest_palindromic(palindromic_hours: list[int], time_representation: str) -> int:
+def find_nearest_palindromic(
+    palindromic_hours: list[int], time_representation: str
+) -> int:
     requested_time = str_time_to_seconds(time_representation)
 
     return min(abs(requested_time - hour) for hour in palindromic_hours)
