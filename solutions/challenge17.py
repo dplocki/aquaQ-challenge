@@ -21,7 +21,9 @@ def parse_wrapper(
         yield date.fromisoformat(match_date), away_team, int(away_score)
 
 
-def get_shameful_strick(source: Iterator[Tuple[date, str, int]]) -> Generator[Tuple[int, str, date, date], None, None]:
+def get_shameful_strick(
+    source: Iterator[Tuple[date, str, int]]
+) -> Generator[Tuple[int, str, date, date], None, None]:
     memory = {}
 
     for date, team, score in parse_wrapper(source):
