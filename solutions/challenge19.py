@@ -2,18 +2,6 @@ from typing import Generator, Iterable, Tuple
 from utils import get_file_content
 
 
-def split_into_groups(
-    source: Iterable, group_size: int
-) -> Generator[Tuple, None, None]:
-    temporary = []
-    for item in source:
-        temporary.append(item)
-
-        if len(temporary) == group_size:
-            yield tuple(temporary)
-            temporary = []
-
-
 def neighbors(grid_size: int, point: Tuple[int, int]) -> Generator[Tuple, None, None]:
     row, column = point
 
