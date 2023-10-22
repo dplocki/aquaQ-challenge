@@ -40,25 +40,35 @@ def points_to_check(grid_size, state: set) -> set:
     return result
 
 
-def run_simulation(line: str) -> int:
-    tokens = map(int, line.split())
-    maximum_steps = next(tokens)
-    grid_size = next(tokens)
-    state = set(split_into_groups(tokens, 2))
-
-    for _ in range(maximum_steps):
+def run_simulation(grid_size: int, state: set) -> int:
+    while True:
         new_state = set()
         for point in points_to_check(grid_size, state):
             if check_point(grid_size, state, point):
                 new_state.add(point)
 
         state = new_state
+        yield state
 
-    return len(state)
+
+def find_elements_number_for(line: str) -> int:
+    tokens = map(int, line.split())
+    maximum_steps = next(tokens)
+    grid_size = next(tokens)
+    state = set(split_into_groups(tokens, 2))
+    memory = []
+
+    for step_index, step_state in enumerate(run_simulation(grid_size, state)):
+
+        for past_state_index, paste_state in enumerate(memory):
+            if step_state == paste_state:
+                return len(memory[(maximum_steps - past_state_index - 1) % (step_index - past_state_index) + past_state_index])
+
+        memory.append(step_state)
 
 
 def solution(content: str):
-    return sum(run_simulation(line) for line in content.splitlines())
+    return sum(find_elements_number_for(line) for line in content.splitlines())
 
 
 assert solution('350 6 2 2 2 3') == 8
