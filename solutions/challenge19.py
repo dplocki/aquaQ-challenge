@@ -51,14 +51,16 @@ def find_elements_number_for(line: str) -> int:
     for step_index, step_state in enumerate(run_simulation(grid_size, state)):
 
         for past_state_index, paste_state in enumerate(memory):
-            if step_state == paste_state:
-                return len(
-                    memory[
-                        (maximum_steps - past_state_index - 1)
-                        % (step_index - past_state_index)
-                        + past_state_index
-                    ]
-                )
+            if step_state != paste_state:
+                continue
+
+            return len(
+                memory[
+                    (maximum_steps - past_state_index - 1)
+                    % (step_index - past_state_index)
+                    + past_state_index
+                ]
+            )
 
         memory.append(step_state)
 
