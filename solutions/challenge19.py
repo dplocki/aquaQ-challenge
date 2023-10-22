@@ -2,7 +2,9 @@ from typing import Generator, Iterable, Tuple
 from utils import get_file_content
 
 
-def split_into_groups(source: Iterable, group_size: int) -> Generator[Tuple, None, None]:
+def split_into_groups(
+    source: Iterable, group_size: int
+) -> Generator[Tuple, None, None]:
     temporary = []
     for item in source:
         temporary.append(item)
@@ -62,7 +64,13 @@ def find_elements_number_for(line: str) -> int:
 
         for past_state_index, paste_state in enumerate(memory):
             if step_state == paste_state:
-                return len(memory[(maximum_steps - past_state_index - 1) % (step_index - past_state_index) + past_state_index])
+                return len(
+                    memory[
+                        (maximum_steps - past_state_index - 1)
+                        % (step_index - past_state_index)
+                        + past_state_index
+                    ]
+                )
 
         memory.append(step_state)
 
@@ -71,6 +79,6 @@ def solution(content: str) -> int:
     return sum(find_elements_number_for(line) for line in content.splitlines())
 
 
-assert solution('350 6 2 2 2 3') == 8
+assert solution("350 6 2 2 2 3") == 8
 
-print('Solution', solution(get_file_content('input19.txt')))
+print("Solution", solution(get_file_content("input19.txt")))
