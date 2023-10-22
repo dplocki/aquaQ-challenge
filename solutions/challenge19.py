@@ -67,7 +67,7 @@ def find_elements_number_for(line: str) -> int:
         memory.append(step_state)
 
 
-def solution(content: str):
+def solution(content: str) -> int:
     return sum(find_elements_number_for(line) for line in content.splitlines())
 
 
