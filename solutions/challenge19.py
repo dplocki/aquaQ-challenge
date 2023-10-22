@@ -1,5 +1,5 @@
-from typing import Generator, Iterable, Tuple
-from utils import get_file_content
+from typing import Generator, Tuple
+from utils import get_file_content, split_into_groups
 
 
 def neighbors(grid_size: int, point: Tuple[int, int]) -> Generator[Tuple, None, None]:
