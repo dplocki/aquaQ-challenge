@@ -29,7 +29,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 16    | 6.1     | `stringProc`  | [Keming](./solutions/challenge16.py)  |
 | 17    | 3.6     | `stateMgmt`   | [The Beautiful Shame](./solutions/challenge17.py)|
 | 18    | 4.6     | `maths`       | [Emit time](./solutions/challenge18.py)|
-| 19    | 5.8     | `stateMgmt`   | It's alive                            |
+| 19    | 5.8     | `stateMgmt`   | [It's alive](./solutions/challenge19.py)|
 | 20    | 3.6     | `stateMgmt`   | Blackjack                             |
 | 21    | 4.0     | `paths+graphs`| Clean Sweep                           |
 | 22    | 3.7     | `stringProc`  | Veni Vidi Vitavi                      |
