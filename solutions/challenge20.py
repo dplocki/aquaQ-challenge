@@ -18,12 +18,10 @@ def build_card_values() -> Dict[str, int]:
 def solution(content: str) -> int:
     remove_losing_hands = lambda value: value < WINING_POINTS
     cards_values = build_card_values()
-    cards = content.split()
-
     win_count = 0
     current_hand = [0]
 
-    for card in cards:
+    for card in content.split():
         current_hand = [
             new_value + value
             for new_value in cards_values[card]
