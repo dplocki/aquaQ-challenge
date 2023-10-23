@@ -1,6 +1,8 @@
 from typing import Dict
 from utils import get_file_content
 
+WINING_POINTS = 21
+
 
 def build_card_values() -> Dict[str, int]:
     cards = {str(face): [face] for face in range(2, 11)}
@@ -14,6 +16,7 @@ def build_card_values() -> Dict[str, int]:
 
 
 def solution(content: str) -> int:
+    remove_losing_hands = lambda value: value < WINING_POINTS
     cards_values = build_card_values()
     cards = content.split()
 
@@ -21,16 +24,20 @@ def solution(content: str) -> int:
     current_hand = [0]
 
     for card in cards:
-        current_hand = [a + value for a in cards_values[card] for value in current_hand]
+        current_hand = [
+            new_value + value
+            for new_value in cards_values[card]
+            for value in current_hand
+        ]
 
-        if 21 in current_hand:
+        if WINING_POINTS in current_hand:
             win_count += 1
             current_hand = [0]
             continue
 
-        current_hand = list(filter(lambda value: value < 21, current_hand))
+        current_hand = list(filter(remove_losing_hands, current_hand))
 
-        if len(current_hand) == 0:
+        if not current_hand:
             current_hand = [0]
 
     return win_count
