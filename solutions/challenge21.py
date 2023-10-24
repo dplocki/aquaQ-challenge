@@ -14,7 +14,7 @@ def parse(vacuum_size: int, content: str) -> List[List[int]]:
     ]
 
 
-def find_the_best_path(vacuum_size: int, motes_map: List[List[int]]) -> int:
+def find_the_best_path(motes_map: List[List[int]]) -> int:
     size_of_line = len(motes_map[0])
     result = (size_of_line + 2) * [0]
 
@@ -32,7 +32,7 @@ def find_the_best_path(vacuum_size: int, motes_map: List[List[int]]) -> int:
 
 
 def solution(vacuum_size: int, content: str) -> int:
-    return find_the_best_path(vacuum_size, parse(vacuum_size, content))
+    return find_the_best_path(parse(vacuum_size, content))
 
 
 assert solution(3, "3 4 5 1 3\n9 3 4 0 9\n4 5 4 4 7\n3 7 9 8 2") == 65
