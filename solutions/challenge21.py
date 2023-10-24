@@ -2,12 +2,14 @@ from typing import List
 from utils import get_file_content
 
 
-def transform_line_into_chunks(vacuum_size: int, line: str) -> int:
-    a = list(map(int, line.split()))
-    yield from (sum(a[i : i + vacuum_size]) for i in range(len(a) - vacuum_size + 1))
-
-
 def parse(vacuum_size: int, content: str) -> List[List[int]]:
+    def transform_line_into_chunks(vacuum_size: int, line: str) -> int:
+        numbers = list(map(int, line.split()))
+        yield from (
+            sum(numbers[index : index + vacuum_size])
+            for index in range(len(numbers) - vacuum_size + 1)
+        )
+
     return [
         list(transform_line_into_chunks(vacuum_size, line))
         for line in content.splitlines()
@@ -21,9 +23,10 @@ def find_the_best_path(motes_map: List[List[int]]) -> int:
     for motes_line in motes_map:
         new_result = (size_of_line + 2) * [0]
 
-        for i in range(1, size_of_line + 1):
-            new_result[i] = (
-                max(result[i - 1], result[i], result[i + 1]) + motes_line[i - 1]
+        for index in range(1, size_of_line + 1):
+            new_result[index] = (
+                max(result[index - 1], result[index], result[index + 1])
+                + motes_line[index - 1]
             )
 
         result = new_result
