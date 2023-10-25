@@ -23,8 +23,7 @@ def number_to_roman(value: int) -> str:
     if value // 100 == 4:
         value -= 400
         result += "CD"
-
-    if value >= 100:
+    else:
         result += (value // 100) * "C"
         value -= 100 * (value // 100)
 
@@ -32,15 +31,14 @@ def number_to_roman(value: int) -> str:
         value -= 90
         result += "XC"
 
-    if value // 10 == 4:
-        value -= 40
-        result += "XL"
-
     if value // 10 >= 5:
         value -= 50
         result += "L"
 
-    if value >= 10:
+    if value // 10 == 4:
+        value -= 40
+        result += "XL"
+    else:
         result += (value // 10) * "X"
         value -= 10 * (value // 10)
 
@@ -55,8 +53,8 @@ def number_to_roman(value: int) -> str:
     if value == 4:
         result += "IV"
         value -= 4
-
-    result += value * "I"
+    else:
+        result += value * "I"
 
     return result
 
