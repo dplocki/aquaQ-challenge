@@ -56,7 +56,7 @@ def number_to_roman(value: int) -> str:
         result += "IV"
         value -= 4
 
-    result += (value % 10) * "I"
+    result += value * "I"
 
     return result
 
