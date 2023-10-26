@@ -6,20 +6,19 @@ KEY_TABLE_SIZE = 5
 
 
 def prepear_decoding_table(keyword: str) -> Dict[Tuple[int, int], str]:
-
-    a = keyword.lower().replace(" ", "")
+    keyword_letters = keyword.lower().replace(" ", "")
     used_letters = set("j")
     result = {}
 
     index = 0
-    for letter in a + ascii_lowercase:
+    for letter in keyword_letters + ascii_lowercase:
         if letter in used_letters:
             continue
 
         used_letters.add(letter)
         result[index // KEY_TABLE_SIZE, index % KEY_TABLE_SIZE] = letter
         index += 1
-        if index == 25:
+        if index == KEY_TABLE_SIZE * KEY_TABLE_SIZE:
             break
 
     return result
@@ -67,4 +66,4 @@ def solution(content: str) -> str:
     return playfair_cipher_decryption(prepear_decoding_table("power plant"), content)
 
 
-print("Solution", solution(get_file_content("input23.txt")))
+print("Solution:", solution(get_file_content("input23.txt")))
