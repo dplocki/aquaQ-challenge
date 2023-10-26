@@ -32,34 +32,31 @@ def playfair_cipher_decryption(
     key_table: Dict[Tuple[int, int], str], encrypted_message: str
 ) -> str:
     reverse_key_table = reverse_dictionary(key_table)
-    result = ""
+    result = []
 
     for first, second in split_into_groups(encrypted_message, 2):
         first_position = reverse_key_table[first]
         second_position = reverse_key_table[second]
 
         if first_position[0] == second_position[0]:
-            result += key_table[
-                first_position[0], (first_position[1] - 1) % KEY_TABLE_SIZE
-            ]
-            result += key_table[
-                second_position[0], (second_position[1] - 1) % KEY_TABLE_SIZE
-            ]
-            continue
+            result.append(
+                key_table[first_position[0], (first_position[1] - 1) % KEY_TABLE_SIZE]
+            )
+            result.append(
+                key_table[second_position[0], (second_position[1] - 1) % KEY_TABLE_SIZE]
+            )
+        elif first_position[1] == second_position[1]:
+            result.append(
+                key_table[(first_position[0] - 1) % KEY_TABLE_SIZE, first_position[1]]
+            )
+            result.append(
+                key_table[(second_position[0] - 1) % KEY_TABLE_SIZE, second_position[1]]
+            )
+        else:
+            result.append(key_table[first_position[0], second_position[1]])
+            result.append(key_table[second_position[0], first_position[1]])
 
-        if first_position[1] == second_position[1]:
-            result += key_table[
-                (first_position[0] - 1) % KEY_TABLE_SIZE, first_position[1]
-            ]
-            result += key_table[
-                (second_position[0] - 1) % KEY_TABLE_SIZE, second_position[1]
-            ]
-            continue
-
-        result += key_table[first_position[0], second_position[1]]
-        result += key_table[second_position[0], first_position[1]]
-
-    return result
+    return "".join(result)
 
 
 def solution(content: str) -> str:
