@@ -34,7 +34,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 21    | 4.0     | `paths+graphs`| [Clean Sweep](./solutions/challenge21.py)|
 | 22    | 3.7     | `stringProc`  | [Veni Vidi Vitavi](./solutions/challenge22.py)|
 | 23    | 4.3     | `stringProc`  | [Fair Play](./solutions/challenge23.py)|
-| 24    | 7.3     | `paths+graphs`| Huff and Puff                         |
+| 24    | 7.3     | `paths+graphs`| [Huff and Puff](./solutions/challenge24.py)|
 | 25    | 3.1     | `listOps`     | S'morse                               |
 | 26    | 4.5     | `permutation` | Typo Theft                            |
 | 27    | 3.4     | `stringProc`  | Snake Eater                           |
