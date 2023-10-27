@@ -18,22 +18,19 @@ def pass_by_tree(node, prefix):
         yield node.value, prefix
         return
 
-    yield from pass_by_tree(node.left, prefix + '0')
-    yield from pass_by_tree(node.right, prefix + '1')
+    yield from pass_by_tree(node.left, prefix + "0")
+    yield from pass_by_tree(node.right, prefix + "1")
 
 
 def build_decoding_dictionary(node):
-    return {
-        code: letter
-        for letter, code in pass_by_tree(node, '')
-    }
+    return {code: letter for letter, code in pass_by_tree(node, "")}
 
 
 def build_tree(text: str):
     nodes = [Node(letter, frequency) for letter, frequency in Counter(text).items()]
 
     while len(nodes) > 1:
-        nodes.sort(key=lambda node: (node.frequency, node.value))
+        nodes.sort(key=lambda node: (node.frequency, len(node.value), node.value))
 
         nodes.append(
             Node(
@@ -51,7 +48,7 @@ def build_tree(text: str):
 
 def decoding_message(decode_dictionary, encoded_text: str) -> str:
     result = []
-    chunk = ''
+    chunk = ""
 
     while encoded_text:
         chunk += encoded_text[0]
@@ -59,12 +56,17 @@ def decoding_message(decode_dictionary, encoded_text: str) -> str:
 
         if chunk in decode_dictionary:
             result.append(decode_dictionary[chunk])
-            chunk = ''
+            chunk = ""
 
-    return ''.join(result)
+    return "".join(result)
 
 
-assert decoding_message(build_tree("A_DEAD_DAD_CEDED_A_BAD_BABE_A_BEADED_ABACA_BED"), '11101100011000') == 'CEDED'
+assert (
+    decoding_message(
+        build_tree("A_DEAD_DAD_CEDED_A_BAD_BABE_A_BEADED_ABACA_BED"), "11101100011000"
+    )
+    == "CEDED"
+)
 
-lines = get_file_content('input24.txt').splitlines()
-print('Solution:', decoding_message(build_tree(lines[0]), lines[1]))
+lines = get_file_content("input24.txt").splitlines()
+print("Solution:", decoding_message(build_tree(lines[0]), lines[1]))
