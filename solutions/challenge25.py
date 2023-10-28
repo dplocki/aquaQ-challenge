@@ -70,7 +70,4 @@ def transform_to_letters(source):
 
 
 for message in get_file_content("input25.txt").split("\n\n"):
-    for letter in transform_to_letters(transform_click_timestamps_to_delays(message)):
-        print(letter, end="")
-
-    print()
+    print("".join(transform_to_letters(transform_click_timestamps_to_delays(message))))
