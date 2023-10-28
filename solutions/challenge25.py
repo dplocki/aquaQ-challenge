@@ -52,15 +52,12 @@ def transform_to_letters(source):
     for index, units in enumerate(source):
         if index % 2 == 1:
             if units == 1:
-                pass
+                continue
 
-            elif units == 3:
-                yield MORSE_CODE[result]
-                result = ""
+            yield MORSE_CODE[result]
+            result = ""
 
             if units == 7:
-                yield MORSE_CODE[result]
-                result = ""
                 yield " "
         else:
             if units == 1:
