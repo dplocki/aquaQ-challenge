@@ -48,10 +48,9 @@ def transform_click_timestamps_to_delays(content: List[str]):
 
 def transform_to_letters(source):
     result = ""
-    is_break = False
 
-    for units in source:
-        if is_break:
+    for index, units in enumerate(source):
+        if index % 2 == 1:
             if units == 1:
                 pass
 
@@ -63,17 +62,12 @@ def transform_to_letters(source):
                 yield MORSE_CODE[result]
                 result = ""
                 yield " "
-
-            is_break = False
-
         else:
             if units == 1:
                 result += "."
 
             elif units == 3:
                 result += "-"
-
-            is_break = True
 
     yield MORSE_CODE[result]
 
