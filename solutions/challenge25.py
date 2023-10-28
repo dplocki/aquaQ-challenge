@@ -60,6 +60,8 @@ def transform_to_letters(source):
                 result = ""
 
             if units == 7:
+                yield MORSE_CODE[result]
+                result = ""
                 yield " "
 
             is_break = False
