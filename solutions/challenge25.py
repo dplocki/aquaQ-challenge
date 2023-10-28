@@ -71,7 +71,7 @@ def transform_to_letters(source):
             elif units == 3:
                 result += "-"
 
-        is_break = True
+            is_break = True
 
 
 for message in get_file_content("input25.txt").split("\n\n"):
