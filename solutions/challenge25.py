@@ -1,6 +1,6 @@
 from itertools import pairwise
 from typing import List
-from utils import get_file_content, split_into_groups
+from utils import get_file_content
 
 MORSE_CODE = {
     ".-": "a",
@@ -76,7 +76,6 @@ def transform_to_letters(source):
             is_break = True
 
     yield MORSE_CODE[result]
-
 
 
 for message in get_file_content("input25.txt").split("\n\n"):
