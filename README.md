@@ -36,7 +36,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 23    | 4.3     | `stringProc`  | [Fair Play](./solutions/challenge23.py)|
 | 24    | 7.3     | `paths+graphs`| [Huff and Puff](./solutions/challenge24.py)|
 | 25    | 3.1     | `listOps`     | [S'morse](./solutions/challenge25.py) |
-| 26    | 4.5     | `permutation` | Typo Theft                            |
+| 26    | 4.5     | `permutation` | [Typo Theft](./solutions/challenge26.py)|
 | 27    | 3.4     | `stringProc`  | Snake Eater                           |
 | 28    | 3.8     | `paths+graphs`| Hall of Mirrors                       |
 | 29    | 2.8     | `maths`       | On the up and up                      |
