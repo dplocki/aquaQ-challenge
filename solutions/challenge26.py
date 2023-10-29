@@ -10,13 +10,10 @@ def index_of_first_higher_than(seek, collection: List) -> int:
     return -1
 
 
-def rearranged_the_number(number: str):
-    digits = list(int(str_digit) for str_digit in number)
+def rearranged_the_number(number: str) -> int:
+    digits = list(number)
     if len(digits) == 1:
         return int(number)
-
-    if len(digits) == 2:
-        return max(int(number), int(number[::-1]))
 
     for index in range(len(digits) - 2, -1, -1):
         sorted_digits_in_part = sorted(digits[index:])
@@ -32,12 +29,9 @@ def rearranged_the_number(number: str):
 
         return int(
             "".join(
-                map(
-                    str,
-                    digits[:index]
-                    + [sorted_digits_in_part[0]]
-                    + sorted(sorted_digits_in_part[1:]),
-                )
+                digits[:index]
+                + [sorted_digits_in_part[0]]
+                + sorted(sorted_digits_in_part[1:]),
             )
         )
 
