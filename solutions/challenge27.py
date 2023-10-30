@@ -22,8 +22,7 @@ def find_snake_endings(
     _map: Dict[Tuple[int, int], str]
 ) -> Generator[Tuple[int, int], None, None]:
     for row, column in _map:
-        neighbor = [(r, c) for r, c in get_neighbors(row, column) if (r, c) in _map]
-
+        neighbor = [n for n in get_neighbors(row, column) if n in _map]
         if len(neighbor) == 1:
             yield row, column
 
@@ -35,11 +34,11 @@ def only_valid_neighbors(
 
 
 def walk(
-    was: Set[Tuple[int, int]],
+    visited: Set[Tuple[int, int]],
     _map: Dict[Tuple[int, int], str],
     start_point: Tuple[int, int],
 ) -> Generator[str, None, None]:
-    if start_point in was:
+    if start_point in visited:
         return
 
     next_point = next(only_valid_neighbors(_map, start_point))
@@ -50,14 +49,23 @@ def walk(
 
     while True:
         result += _map[current_point]
-        was.add(current_point)
+        visited.add(current_point)
         new_current_point = (
             current_point[0] + direction[0],
             current_point[1] + direction[1],
         )
 
-        if new_current_point not in _map:
-            next_point = next((n for n in only_valid_neighbors(_map, current_point) if n not in was), None)
+        if new_current_point in _map:
+            current_point = new_current_point
+        else:
+            next_point = next(
+                (
+                    n
+                    for n in only_valid_neighbors(_map, current_point)
+                    if n not in visited
+                ),
+                None,
+            )
             if next_point == None:
                 yield result
                 return
@@ -69,21 +77,19 @@ def walk(
 
             yield result
             result = ""
-        else:
-            current_point = new_current_point
 
 
 def solution(content: str) -> int:
     _map = parse_content_to_map(content)
     letter_a = ord("a")
-    was = set()
+    visited = set()
 
     return sum(
         sum(ord(letter) - letter_a + 1 for letter in word) * len(word)
         for start in sorted(
             find_snake_endings(_map), key=lambda coordinates: coordinates[1]
         )
-        for word in walk(was, _map, start)
+        for word in walk(visited, _map, start)
     )
 
 
