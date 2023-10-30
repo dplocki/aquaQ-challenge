@@ -1,6 +1,5 @@
-
 from typing import Dict, Tuple
-from utils import get_file_content
+from utils import get_file_raw_content
 
 
 def get_neighbors(x, y):
@@ -97,4 +96,4 @@ test_input ='''                roulette
 
 assert solution(test_input) == 7995
 
-print('Solution', solution(get_file_content('input27.txt')))
+print('Solution', solution(get_file_raw_content('input27.txt')))
