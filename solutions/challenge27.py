@@ -10,14 +10,12 @@ def get_neighbors(x: int, y: int) -> Generator[Tuple[int, int], None, None]:
 
 
 def parse_content_to_map(content: str) -> Dict[Tuple[int, int], str]:
-    result = {}
-
-    for row_index, row in enumerate(content.splitlines()):
-        for column_index, column in enumerate(row):
-            if column != " ":
-                result[row_index, column_index] = column
-
-    return result
+    return {
+        (row_index, column_index): column
+        for row_index, row in enumerate(content.splitlines())
+        for column_index, column in enumerate(row)
+        if column != " "
+    }
 
 
 def find_snake_endings(
