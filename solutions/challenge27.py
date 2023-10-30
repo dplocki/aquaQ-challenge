@@ -1,8 +1,8 @@
-from typing import Dict, Tuple
+from typing import Dict, Generator, Set, Tuple
 from utils import get_file_raw_content
 
 
-def get_neighbors(x, y):
+def get_neighbors(x: int, y: int) -> Generator[Tuple[int, int], None, None]:
     yield x + 1, y
     yield x - 1, y
     yield x, y + 1
@@ -20,7 +20,7 @@ def parse_content_to_map(content: str) -> Dict[Tuple[int, int], str]:
     return result
 
 
-def find_snake_endings(_map):
+def find_snake_endings(_map: Dict[Tuple[int, int], str]) -> Generator[Tuple[int, int], None, None]:
     for row, column in _map:
         neighbor = [
             (r, c)
@@ -31,13 +31,13 @@ def find_snake_endings(_map):
             yield row, column
 
 
-def only_valid_neighbors(_map, point):
+def only_valid_neighbors(_map: Dict[Tuple[int, int], str], point: Tuple[int, int]) -> Generator[Tuple[int, int], None, None]:
     yield from (p
         for p in get_neighbors(*point)
         if p in _map)
 
 
-def walk(was: set, _map, start_point):
+def walk(was: Set[Tuple[int, int]], _map: Dict[Tuple[int, int], str], start_point: Tuple[int, int]) -> Generator[str, None, None]:
     if start_point in was:
         return
 
@@ -67,7 +67,7 @@ def walk(was: set, _map, start_point):
             current_point = new_current_point
 
 
-def solution(content: str):
+def solution(content: str) -> int:
     _map = parse_content_to_map(content)
     letter_a = ord('a')
 
