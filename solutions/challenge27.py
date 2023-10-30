@@ -57,14 +57,11 @@ def walk(
         )
 
         if new_current_point not in _map:
-            neighbors = [
-                n for n in only_valid_neighbors(_map, current_point) if n not in was
-            ]
-            if len(neighbors) == 0:
+            next_point = next((n for n in only_valid_neighbors(_map, current_point) if n not in was), None)
+            if next_point == None:
                 yield result
                 return
 
-            next_point = neighbors[0]
             direction = (
                 next_point[0] - current_point[0],
                 next_point[1] - current_point[1],
