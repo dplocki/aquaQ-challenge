@@ -1,8 +1,9 @@
 from itertools import count
+from typing import Dict, Tuple
 from utils import get_file_raw_content
 
 
-def find_starting_location(mirrors, letter):
+def find_starting_location(mirrors: Dict[Tuple[int, int], str], letter: str) -> Tuple[int, int]:
     for row in count(1):
         if (row, 0) in mirrors and mirrors[row, 0] == letter:
             return row, 0
@@ -10,18 +11,15 @@ def find_starting_location(mirrors, letter):
     raise Exception(f'Letter {letter} not found')
 
 
-def ray_tracing(mirrors, point):
+def ray_tracing(mirrors: Dict[Tuple[int, int], str], point: Tuple[int, int]) -> str:
     direction = 0, 1
 
     while True:
         point = point[0] + direction[0], point[1] + direction[1]
-        print(point)
-
         if point not in mirrors:
             continue
 
         characters = mirrors[point]
-
         if characters not in '/\\':
             return characters
         elif characters == '/':
