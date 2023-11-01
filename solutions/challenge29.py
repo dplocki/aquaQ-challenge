@@ -3,9 +3,9 @@ from utils import get_file_content
 
 
 def solution(maximum_number: int) -> int:
-    cache = {0: 10}
+    cache = {}
 
-    for i in range(1, 10):
+    for i in range(10):
         cache[i * 10] = 10 - i
 
     multiplayer = 100
