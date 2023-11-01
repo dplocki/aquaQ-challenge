@@ -1,26 +1,25 @@
+from math import floor, log10
 from utils import get_file_content
 
 
-def is_good_number(number):
-    x = str(number)
-    for a, b in zip(x, x[1:]):
-        if a > b:
-            return False
+def solution(maximum_number: int) -> int:
+    cache = {0: 10}
 
-    return True
+    for i in range(1, 10):
+        cache[i * 10] = 10 - i
 
+    multiplayer = 100
+    while multiplayer < maximum_number:
+        for i in range(1, 10):
+            cache[i * multiplayer] = sum(
+                cache[j * multiplayer // 10] for j in range(i, 10)
+            )
 
-assert is_good_number(1)
-assert is_good_number(45)
-assert is_good_number(777)
-assert is_good_number(1245)
+        multiplayer *= 10
 
+    limes = maximum_number - 10 ** floor(log10(maximum_number))
 
-def solution(maximum_number):
-    return sum(1
-        for i in range(int(maximum_number))
-        if is_good_number(i)
-    )
+    return sum(value for key, value in cache.items() if key <= limes)
 
 
-print('Solution', solution(get_file_content('input29.txt')))
+print("Solution", solution(int(get_file_content("input29.txt"))))
