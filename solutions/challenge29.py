@@ -3,10 +3,7 @@ from utils import get_file_content
 
 
 def solution(maximum_number: int) -> int:
-    cache = {}
-
-    for i in range(10):
-        cache[i * 10] = 10 - i
+    cache = {(i * 10): (10 - i) for i in range(10)}
 
     multiplayer = 100
     while multiplayer < maximum_number:
