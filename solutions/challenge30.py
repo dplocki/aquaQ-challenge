@@ -2,7 +2,7 @@ from utils import get_file_content
 
 
 def count_winning_positions(deck: str) -> int:
-    ones = deck.count('1')
+    ones = deck.count("1")
     if ones % 2 == 1:
         return ones // 2 + 1
 
