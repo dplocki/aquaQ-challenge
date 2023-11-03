@@ -40,7 +40,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 27    | 3.4     | `stringProc`  | [Snake Eater](./solutions/challenge27.py)|
 | 28    | 3.8     | `paths+graphs`| [Hall of Mirrors](./solutions/challenge28.py)|
 | 29    | 2.8     | `maths`       | [On the up and up](./solutions/challenge29.py)|
-| 30    | 5.9     | `listOps`     | Flip Out                              |
+| 30    | 5.9     | `listOps`     | [Flip Out](./solutions/challenge30.py)|
 | 31    | 6.1     | `stateMgmt`   | Brandless Combination Cubes           |
 | 32    | 3.4     | `stringProc`  | In Parenthesis                        |
 | 33    | 3.2     | `permutation` | Bit of Bully                          |
