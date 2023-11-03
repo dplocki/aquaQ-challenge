@@ -1,36 +1,54 @@
+from functools import lru_cache
+from typing import Tuple
 from utils import get_file_content
 
 
-def turn(deck, position: int):
+def get_possible_splits_of_deck(deck: str) -> Tuple[str, str]:
+    index = deck.find('1', 0)
+    while index > - 1:
+        yield split_the_deck(deck, index)
+        index = deck.find('1', index + 1)
 
-    if (position - 1) in deck:
-        deck[position - 1] = not deck[position - 1]
 
-    if (position + 1) in deck:
-        deck[position + 1] = not deck[position + 1]
-
-    del deck[position]
-
-    cards = len(deck)
-    if len(deck) == 0:
+@lru_cache
+def can_win(deck: str) -> bool:
+    if deck == None:
         return True
 
-    if sum(1 for i in deck.keys() if not i) == cards:
+    if deck == '1':
+        return True
+
+    if deck.count('0') == len(deck):
         return False
 
-    for index in (index for index, card in deck.items() if card):
-        if turn(deck.copy(), index):
-            return True
+    for part_generator in get_possible_splits_of_deck(deck):
+        if not can_win(next(part_generator, None)):
+            continue
+
+        if not can_win(next(part_generator, None)):
+            continue
+
+        return True
 
     return False
 
 
-def count_winning_positions(raw_deck: str) -> int:
-    deck = {index: (card == "1") for index, card in enumerate(raw_deck)}
+def flip_card(card: str) -> str:
+    return '1' if card == '0' else '0'
 
-    to_check = [index for index, card in deck.items() if card]
 
-    return sum(1 for start in to_check if turn(deck.copy(), start))
+def split_the_deck(deck: str, index: int):
+    if index > 0:
+        yield deck[:index - 1] + flip_card(deck[index - 1])
+
+    if index + 1 < len(deck):
+        yield flip_card(deck[index + 1]) + deck[index + 2:]
+
+
+def count_winning_positions(deck: str) -> int:
+    return sum(1
+        for part_generator in get_possible_splits_of_deck(deck)
+        if all(map(can_win, part_generator)))
 
 
 def solution(content: str) -> int:
