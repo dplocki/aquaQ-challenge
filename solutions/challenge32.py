@@ -1,25 +1,21 @@
 from utils import get_file_content
 
+OPEN_BRACES = '([{'
+CLOSE_BRACES = ')]}'
+
 
 def is_braces_balanced(line: str) -> bool:
     stack = []
 
     for character in line:
-        if character in "([{":
+        if character in OPEN_BRACES:
             stack.append(character)
-        elif character in ")]}":
+        elif character in CLOSE_BRACES:
             if not stack:
                 return False
 
             previous_brace = stack.pop()
-
-            if previous_brace == "(" and character != ")":
-                return False
-
-            if previous_brace == "[" and character != "]":
-                return False
-
-            if previous_brace == "{" and character != "}":
+            if CLOSE_BRACES[OPEN_BRACES.index(previous_brace)] != character:
                 return False
 
     return len(stack) == 0
