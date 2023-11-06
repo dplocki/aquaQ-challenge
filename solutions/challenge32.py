@@ -1,7 +1,7 @@
 from utils import get_file_content
 
-OPEN_BRACES = '([{'
-CLOSE_BRACES = ')]}'
+OPEN_BRACES = "([{"
+CLOSE_BRACES = ")]}"
 
 
 def is_braces_balanced(line: str) -> bool:
