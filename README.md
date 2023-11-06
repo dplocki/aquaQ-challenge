@@ -43,7 +43,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 30    | 5.9     | `listOps`     | [Flip Out](./solutions/challenge30.py)|
 | 31    | 6.1     | `stateMgmt`   | [Brandless Combination Cubes](./solutions/challenge31.py)|
 | 32    | 3.4     | `stringProc`  | [In Parenthesis](./solutions/challenge32.py)|
-| 33    | 3.2     | `permutation` | Bit of Bully                          |
+| 33    | 3.2     | `permutation` | [Bit of Bully](./solutions/challenge33.py)|
 | 34    | 7.0     | `stateMgmt`   | Train in Vain                         |
 | 35    | 4.5     | `stringProc`  | Columns                               |
 | 36    | 6.0     | `maths`       | Tetonor Terror                        |
