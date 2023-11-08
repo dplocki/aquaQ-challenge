@@ -2,6 +2,9 @@ from heapq import heappop, heappush
 from utils import get_file_content, parse_as_csv_content
 from string import ascii_lowercase
 
+WAITING_ON_STATION = 5
+BEFORE_APPEARING = '_'
+
 
 def transform_time_to_minutes(time_value: str):
     hour, minutes = map(int, time_value.split(':'))
@@ -27,7 +30,7 @@ def transform_to_trains_table(content: str):
         x = [None if t == '' else transform_time_to_minutes(t) for t in row]
 
         result = {}
-        previous_station = None
+        previous_station = BEFORE_APPEARING
         previous_time = 0
         for index, station_time in enumerate(x):
             if station_time == None:
@@ -42,17 +45,52 @@ def transform_to_trains_table(content: str):
 
 
 def solution(content: str) -> int:
-    trains = list(transform_to_trains_table(content))
+    stations_names = set()
+    trains = []
 
+    for s in transform_to_trains_table(content):
+        trains.append(s)
+        stations_names.update(s.keys())
+        stations_names.update(x[0] for x in s.values())
+
+    stations_names.remove(BEFORE_APPEARING)
     events = []
-    for train_index, train in enumerate(trains):
-        heappush(events, (train[None][1], 'arrive', train[None][1], train_index))
+    starts_times = {}
+    ends_times = {}
 
+    stations_queues = { s: [] for s in stations_names }
+    stations = {s: None for s in stations_names }
+
+    for train_index, train in enumerate(trains):
+        starts_times[train_index] = train[BEFORE_APPEARING][1]
+        heappush(events, (train[BEFORE_APPEARING][1], 'arrive', train_index, train[BEFORE_APPEARING][0], BEFORE_APPEARING))
 
     while events:
-        event = heappop(events)
+        time, event_type, train_index, current_station, from_station = heappop(events)
 
-    return 0
+        if event_type == 'arrive':
+            if stations[current_station] == None:
+                stations[current_station] = train_index
+                heappush(events, (time + WAITING_ON_STATION, 'leave', train_index, current_station, current_station))
+            else:
+                stations_queues[current_station].append((from_station, train_index))
+        elif event_type == 'leave':
+            stations[current_station] = None
+            if stations_queues[current_station]:
+                stations_queues[current_station].sort(key=lambda q: q[0], reverse=True)
+                train_id = stations_queues[current_station].pop()[1]
+                stations[current_station] = train_id
+                heappush(events, (time + WAITING_ON_STATION, 'leave', train_id, current_station, current_station))
+
+            if current_station not in trains[train_index]:
+                ends_times[train_index] = time
+            else:
+                to_state, time_difference = trains[train_index][current_station]
+                heappush(events, (time + time_difference, 'arrive', train_index, to_state, current_station))
+
+    result = [ ends_times[train_index] - _from for train_index, _from in starts_times.items()]
+
+    return max(result)
 
 
 assert solution('''station,r1,r2,r3
