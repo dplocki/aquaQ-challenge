@@ -95,7 +95,7 @@ def solution(content: str) -> int:
         elif event_type == "leave":
             stations[current_station] = None
             if stations_queues[current_station]:
-                stations_queues[current_station].sort(key=lambda q: q[0], reverse=True)
+                stations_queues[current_station].sort(reverse=True)
                 train_id = stations_queues[current_station].pop()[1]
                 stations[current_station] = train_id
                 heappush(
