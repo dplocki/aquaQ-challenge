@@ -78,36 +78,30 @@ def solution(content: str) -> int:
         time, event_type, train_index, current_station, from_station = heappop(events)
 
         if event_type == "arrive":
-            if stations[current_station] == None:
-                stations[current_station] = train_index
-                heappush(
-                    events,
-                    (
-                        time + WAITING_ON_STATION,
-                        "leave",
-                        train_index,
-                        current_station,
-                        current_station,
-                    ),
-                )
-            else:
-                stations_queues[current_station].append((from_station, train_index))
+            stations_queues[current_station].append((from_station, train_index))
+            heappush(
+                events,
+                (
+                    time,
+                    "zzzzz",
+                    None,
+                    current_station,
+                    None,
+                ),
+            )
+
         elif event_type == "leave":
             stations[current_station] = None
-            if stations_queues[current_station]:
-                stations_queues[current_station].sort(reverse=True)
-                train_id = stations_queues[current_station].pop()[1]
-                stations[current_station] = train_id
-                heappush(
-                    events,
-                    (
-                        time + WAITING_ON_STATION,
-                        "leave",
-                        train_id,
-                        current_station,
-                        current_station,
-                    ),
-                )
+            heappush(
+                events,
+                (
+                    time,
+                    "zzzzz",
+                    None,
+                    current_station,
+                    None,
+                ),
+            )
 
             if current_station not in trains[train_index]:
                 ends_times[train_index] = time
@@ -120,6 +114,22 @@ def solution(content: str) -> int:
                         "arrive",
                         train_index,
                         to_state,
+                        current_station,
+                    ),
+                )
+
+        elif event_type == "zzzzz":
+            if stations[current_station] == None and stations_queues[current_station]:
+                stations_queues[current_station].sort(reverse=True)
+                train_id = stations_queues[current_station].pop()[1]
+                stations[current_station] = train_id
+                heappush(
+                    events,
+                    (
+                        time + WAITING_ON_STATION,
+                        "leave",
+                        train_id,
+                        current_station,
                         current_station,
                     ),
                 )
