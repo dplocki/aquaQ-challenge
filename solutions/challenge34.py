@@ -134,7 +134,9 @@ def solution(content: str) -> int:
                     ),
                 )
 
-    return max(ends_times[train_index] - _from for train_index, _from in starts_times.items())
+    return max(
+        ends_times[train_index] - _from for train_index, _from in starts_times.items()
+    )
 
 
 assert (
