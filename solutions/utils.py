@@ -10,8 +10,12 @@ def get_file_content(file_name: str) -> str:
     return get_file_raw_content(file_name).strip()
 
 
-def parse_as_csv_content(content: str) -> Generator[Tuple, None, None]:
-    for line in content.splitlines()[1:]:
+def parse_as_csv_content(content: str, skip_headers:bool=True) -> Generator[Tuple, None, None]:
+    source = iter(content.splitlines())
+    if skip_headers:
+        next(source)
+
+    for line in source:
         yield line.split(",")
 
 
