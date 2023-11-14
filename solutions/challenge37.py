@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from utils import get_file_content, parse_as_csv_content
+from string import ascii_lowercase
 
 
 WORDS = set(
@@ -12,28 +13,16 @@ def transformation(source):
         yield row[0], list(map(int, row[1].split(" ")))
 
 
-def is_word_matching(word, template, cannot_be_letters: set):
-    letters_to_check = []
-    letters_needs_to_be = []
-    for letter, tile in zip(word, template):
-        if isinstance(tile, str):
-            if letter != tile:
-                return False
-            else:
-                continue
+def is_word_matching(word, allowed_letters, must_be_letters: set):
+    letter_to_check = []
+    for letter, single_allowed_letters in zip(word, allowed_letters):
+        if letter not in single_allowed_letters:
+            return False
 
-        if isinstance(tile, list):
-            if letter in tile:
-                return False
+        if len(single_allowed_letters) > 1:
+            letter_to_check.append(letter)
 
-            letters_needs_to_be.extend(tile)
-
-        letters_to_check.append(letter)
-
-    if not set(letters_needs_to_be).issubset(letters_to_check):
-        return False
-
-    return cannot_be_letters.isdisjoint(letters_to_check)
+    return must_be_letters.issubset(letter_to_check)
 
 
 def count_word_value(word):
@@ -46,37 +35,36 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
     possibilities = None
 
     for guess, score in transformation(parse_as_csv_content(source)):
-        print(guess, score)
-
-        if not possibilities:
+        print("\t", guess, score)
+        if possibilities == None:
             possibilities = WORDS.copy()
-            template = [None] * 5
-            cannot_be_letters = set()
+            allowed_letters = [set(ascii_lowercase) for _ in range(5)]
+            must_be_letters = set()
 
         possibilities.remove(guess)
-
         for letter, value, index in zip(guess, score, range(5)):
             if value == 2:
-                template[index] = letter
-                for temp in template:
-                    if isinstance(temp, list) and letter in temp:
-                        temp.remove(letter)
-                        break
+                if len(allowed_letters[index]) > 1 and letter in must_be_letters:
+                    must_be_letters.remove(letter)
+
+                allowed_letters[index] = set([letter])
+
+        for letter, value, index in zip(guess, score, range(5)):
+            if value == 0:
+                if letter in must_be_letters:
+                    continue
+
+                for allowed_letter in allowed_letters:
+                    if len(allowed_letter) > 1:
+                        allowed_letter.discard(letter)
 
             elif value == 1:
-                if not isinstance(template[index], list):
-                    template[index] = []
-
-                template[index].append(letter)
-
-            elif value == 0:
-                cannot_be_letters.add(letter)
+                allowed_letters[index].remove(letter)
+                must_be_letters.add(letter)
 
         possibilities = set(
-            word for word in possibilities if is_word_matching(word, template, cannot_be_letters)
+            word for word in possibilities if is_word_matching(word, allowed_letters, must_be_letters)
         )
-
-        assert len(possibilities) > 0
 
         if len(possibilities) == 1:
             print(next(iter(possibilities)))
