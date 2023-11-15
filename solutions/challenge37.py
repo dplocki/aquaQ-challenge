@@ -13,16 +13,22 @@ def transformation(source):
         yield row[0], list(map(int, row[1].split(" ")))
 
 
-def is_word_matching(word, allowed_letters, must_be_letters: set):
+def is_word_matching(word, word_template, required_letters):
     letter_to_check = []
-    for letter, single_allowed_letters in zip(word, allowed_letters):
-        if letter not in single_allowed_letters:
-            return False
+    for letter, tile in zip(word, word_template):
+        if isinstance(tile, str):
+            if tile != letter:
+                return False
+            else:
+                continue
 
-        if len(single_allowed_letters) > 1:
-            letter_to_check.append(letter)
+        if isinstance(tile, set):
+            if letter in tile:
+                return False
 
-    return must_be_letters.issubset(letter_to_check)
+        letter_to_check.append(letter)
+
+    return all(letter in letter_to_check for letter in required_letters)
 
 
 def count_word_value(word):
@@ -38,32 +44,30 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
         print("\t", guess, score)
         if possibilities == None:
             possibilities = WORDS.copy()
-            allowed_letters = [set(ascii_lowercase) for _ in range(5)]
-            must_be_letters = set()
+            word_template = [set() for _ in range(5)]
+            required_letters = []
 
         possibilities.remove(guess)
         for letter, value, index in zip(guess, score, range(5)):
             if value == 2:
-                if len(allowed_letters[index]) > 1 and letter in must_be_letters:
-                    must_be_letters.remove(letter)
+                if letter in required_letters and isinstance(word_template[index], set):
+                    required_letters.remove(letter)
 
-                allowed_letters[index] = set([letter])
+                word_template[index] = letter
 
         for letter, value, index in zip(guess, score, range(5)):
             if value == 0:
-                if letter in must_be_letters:
-                    continue
-
-                for allowed_letter in allowed_letters:
-                    if len(allowed_letter) > 1:
-                        allowed_letter.discard(letter)
+                for tile in word_template:
+                    if isinstance(tile, set) and letter not in required_letters:
+                        tile.add(letter)
 
             elif value == 1:
-                allowed_letters[index].remove(letter)
-                must_be_letters.add(letter)
+                if letter not in required_letters:
+                    required_letters.append(letter)
+                word_template[index].add(letter)
 
         possibilities = set(
-            word for word in possibilities if is_word_matching(word, allowed_letters, must_be_letters)
+            word for word in possibilities if is_word_matching(word, word_template, required_letters)
         )
 
         if len(possibilities) == 1:
