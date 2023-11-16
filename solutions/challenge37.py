@@ -1,6 +1,5 @@
 from typing import List, Tuple
 from utils import get_file_content, parse_as_csv_content
-from string import ascii_lowercase
 
 
 WORDS = set()
@@ -25,14 +24,11 @@ def count_word_value(word):
 
     return sum(ord(character) - letter_a for character in word)
 
-assert count_word_value('words') + count_word_value('mince') == 113
-
 
 def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
     possibilities = None
 
     for guess, score in transformation(parse_as_csv_content(source)):
-        print("\t", guess, score)
         if possibilities == None:
             possibilities = WORDS.copy()
             reject_letters_tiles = set()
@@ -57,6 +53,11 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
                 required_letters.add(letter_title)
             elif value == 0:
                 reject_letters_tiles.add(letter_title)
+                if len(letter_title) > 1:
+                    if word_template[index] == None:
+                        word_template[index] = set()
+
+                    word_template[index].add(letter)
 
         new_possibilities = set()
         for possibility in possibilities:
@@ -85,7 +86,6 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
         possibilities = new_possibilities
 
         if len(possibilities) == 1:
-            print(next(iter(possibilities)))
             yield next(iter(possibilities))
             possibilities = None
 
@@ -93,5 +93,7 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
 def solution(content):
     return sum(count_word_value(word) for word in find_the_words(content))
 
+
+assert count_word_value('words') + count_word_value('mince') == 113
 
 print("Solution", solution(get_file_content("input37.csv")))
