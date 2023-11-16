@@ -4,7 +4,9 @@ from utils import get_file_content, parse_as_csv_content
 
 WORDS = set()
 WORDS_TILES = {}
-for word in (word for word in get_file_content("validwords15.txt").splitlines() if len(word) == 5):
+for word in (
+    word for word in get_file_content("validwords15.txt").splitlines() if len(word) == 5
+):
     WORDS.add(word)
 
     letters = []
@@ -38,7 +40,9 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
         required_letters = set()
         current_letters_tiles = []
         for value, letter, index in sorted(zip(score, guess, range(5)), reverse=True):
-            letter_title = letter * (sum(1 for l in current_letters_tiles if l == letter) + 1)
+            letter_title = letter * (
+                sum(1 for l in current_letters_tiles if l == letter) + 1
+            )
 
             current_letters_tiles.append(letter)
             if value == 2:
@@ -60,18 +64,52 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
             if not (reject_letters_tiles.isdisjoint(WORDS_TILES[possibility])):
                 continue
 
-            if (isinstance(word_template[0], set) and possibility[0] in word_template[0]) \
-                or (isinstance(word_template[1], set) and possibility[1] in word_template[1]) \
-                or (isinstance(word_template[2], set) and possibility[2] in word_template[2]) \
-                or (isinstance(word_template[3], set) and possibility[3] in word_template[3]) \
-                or (isinstance(word_template[4], set) and possibility[4] in word_template[4]):
+            if (
+                (
+                    isinstance(word_template[0], set)
+                    and possibility[0] in word_template[0]
+                )
+                or (
+                    isinstance(word_template[1], set)
+                    and possibility[1] in word_template[1]
+                )
+                or (
+                    isinstance(word_template[2], set)
+                    and possibility[2] in word_template[2]
+                )
+                or (
+                    isinstance(word_template[3], set)
+                    and possibility[3] in word_template[3]
+                )
+                or (
+                    isinstance(word_template[4], set)
+                    and possibility[4] in word_template[4]
+                )
+            ):
                 continue
 
-            if (isinstance(word_template[0], str) and word_template[0] != possibility[0]) \
-                or (isinstance(word_template[1], str) and word_template[1] != possibility[1]) \
-                or (isinstance(word_template[2], str) and word_template[2] != possibility[2]) \
-                or (isinstance(word_template[3], str) and word_template[3] != possibility[3]) \
-                or (isinstance(word_template[4], str) and word_template[4] != possibility[4]):
+            if (
+                (
+                    isinstance(word_template[0], str)
+                    and word_template[0] != possibility[0]
+                )
+                or (
+                    isinstance(word_template[1], str)
+                    and word_template[1] != possibility[1]
+                )
+                or (
+                    isinstance(word_template[2], str)
+                    and word_template[2] != possibility[2]
+                )
+                or (
+                    isinstance(word_template[3], str)
+                    and word_template[3] != possibility[3]
+                )
+                or (
+                    isinstance(word_template[4], str)
+                    and word_template[4] != possibility[4]
+                )
+            ):
                 continue
 
             new_possibilities.add(possibility)
@@ -87,6 +125,6 @@ def solution(content):
     return sum(count_word_value(word) for word in find_the_words(content))
 
 
-assert count_word_value('words') + count_word_value('mince') == 113
+assert count_word_value("words") + count_word_value("mince") == 113
 
 print("Solution", solution(get_file_content("input37.csv")))
