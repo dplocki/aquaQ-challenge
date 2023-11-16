@@ -3,9 +3,16 @@ from utils import get_file_content, parse_as_csv_content
 from string import ascii_lowercase
 
 
-WORDS = set(
-    word for word in get_file_content("validwords15.txt").splitlines() if len(word) == 5
-)
+WORDS = set()
+WORDS_TILES = {}
+for word in (word for word in get_file_content("validwords15.txt").splitlines() if len(word) == 5):
+    WORDS.add(word)
+
+    letters = []
+    for letter in word:
+        letters.append(letter * (sum(1 for r in letters if r == letter) + 1))
+
+    WORDS_TILES[word] = set(letters)
 
 
 def transformation(source):
@@ -13,28 +20,12 @@ def transformation(source):
         yield row[0], list(map(int, row[1].split(" ")))
 
 
-def is_word_matching(word, word_template, required_letters):
-    letter_to_check = []
-    for letter, tile in zip(word, word_template):
-        if isinstance(tile, str):
-            if tile != letter:
-                return False
-            else:
-                continue
-
-        if isinstance(tile, set):
-            if letter in tile:
-                return False
-
-        letter_to_check.append(letter)
-
-    return all(letter in letter_to_check for letter in required_letters)
-
-
 def count_word_value(word):
     letter_a = ord("a")
 
     return sum(ord(character) - letter_a for character in word)
+
+assert count_word_value('words') + count_word_value('mince') == 113
 
 
 def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
@@ -44,31 +35,54 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
         print("\t", guess, score)
         if possibilities == None:
             possibilities = WORDS.copy()
-            word_template = [set() for _ in range(5)]
-            required_letters = []
+            reject_letters_tiles = set()
+            word_template = [None for _ in range(5)]
 
         possibilities.remove(guess)
-        for letter, value, index in zip(guess, score, range(5)):
+        required_letters = set()
+        current_letters_tiles = []
+        for value, letter, index in sorted(zip(score, guess, range(5)), reverse=True):
+            letter_title = letter * (sum(1 for l in current_letters_tiles if l == letter) + 1)
+
+            current_letters_tiles.append(letter)
             if value == 2:
-                if letter in required_letters and isinstance(word_template[index], set):
-                    required_letters.remove(letter)
-
                 word_template[index] = letter
-
-        for letter, value, index in zip(guess, score, range(5)):
-            if value == 0:
-                for tile in word_template:
-                    if isinstance(tile, set) and letter not in required_letters:
-                        tile.add(letter)
-
+                required_letters.add(letter_title)
             elif value == 1:
-                if letter not in required_letters:
-                    required_letters.append(letter)
-                word_template[index].add(letter)
 
-        possibilities = set(
-            word for word in possibilities if is_word_matching(word, word_template, required_letters)
-        )
+                if word_template[index] == None:
+                    word_template[index] = set()
+
+                word_template[index].add(letter)
+                required_letters.add(letter_title)
+            elif value == 0:
+                reject_letters_tiles.add(letter_title)
+
+        new_possibilities = set()
+        for possibility in possibilities:
+            if not (required_letters <= WORDS_TILES[possibility]):
+                continue
+
+            if not (reject_letters_tiles.isdisjoint(WORDS_TILES[possibility])):
+                continue
+
+            if (isinstance(word_template[0], set) and possibility[0] in word_template[0]) \
+                or (isinstance(word_template[1], set) and possibility[1] in word_template[1]) \
+                or (isinstance(word_template[2], set) and possibility[2] in word_template[2]) \
+                or (isinstance(word_template[3], set) and possibility[3] in word_template[3]) \
+                or (isinstance(word_template[4], set) and possibility[4] in word_template[4]):
+                continue
+
+            if (isinstance(word_template[0], str) and word_template[0] != possibility[0]) \
+                or (isinstance(word_template[1], str) and word_template[1] != possibility[1]) \
+                or (isinstance(word_template[2], str) and word_template[2] != possibility[2]) \
+                or (isinstance(word_template[3], str) and word_template[3] != possibility[3]) \
+                or (isinstance(word_template[4], str) and word_template[4] != possibility[4]):
+                continue
+
+            new_possibilities.add(possibility)
+
+        possibilities = new_possibilities
 
         if len(possibilities) == 1:
             print(next(iter(possibilities)))
