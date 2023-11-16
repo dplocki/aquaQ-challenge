@@ -32,7 +32,7 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
         if possibilities == None:
             possibilities = WORDS.copy()
             reject_letters_tiles = set()
-            word_template = [None for _ in range(5)]
+            word_template = [set() for _ in range(5)]
 
         possibilities.remove(guess)
         required_letters = set()
@@ -45,18 +45,11 @@ def find_the_words(source: List[Tuple[str, List[int]]]) -> str:
                 word_template[index] = letter
                 required_letters.add(letter_title)
             elif value == 1:
-
-                if word_template[index] == None:
-                    word_template[index] = set()
-
                 word_template[index].add(letter)
                 required_letters.add(letter_title)
             elif value == 0:
                 reject_letters_tiles.add(letter_title)
                 if len(letter_title) > 1:
-                    if word_template[index] == None:
-                        word_template[index] = set()
-
                     word_template[index].add(letter)
 
         new_possibilities = set()
