@@ -48,6 +48,6 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 35    | 4.5     | `stringProc`  | Columns                               |
 | 36    | 6.0     | `maths`       | Tetonor Terror                        |
 | 37    | 5.7     | `stringProc`  | [GUESS WORDS](./solutions/challenge37.py)|
-| 38    | 5.0     | `listOps`     | Number Neighbours                     |
+| 38    | 5.0     | `listOps`     | [Number Neighbours](./solutions/challenge38.py)|
 | 39    | 3.5     | `permutation` | Game of Throwns                       |
 | 40    | 4.0     | `listOps`     | Prominence promenade                  |
