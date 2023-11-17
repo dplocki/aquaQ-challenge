@@ -1,4 +1,3 @@
-
 from typing import List
 from utils import get_file_content
 
@@ -13,7 +12,11 @@ def find_streak(numbers, index, current_streak_length):
         if start < 0 or start + current_streak_length > len(numbers):
             continue
 
-        if (sum(numbers[start + i] for i in range(current_streak_length)) % current_streak_length == 0):
+        if (
+            sum(numbers[start + i] for i in range(current_streak_length))
+            % current_streak_length
+            == 0
+        ):
             return True
 
     return False
@@ -29,8 +32,10 @@ def find_the_longest_streak(numbers, index, max_streak):
 
 def comfortable(numbers: List[int]) -> int:
     max_streak = len(numbers)
-    result = [find_the_longest_streak(numbers, index, max_streak)
-        for index in range(max_streak)]
+    result = [
+        find_the_longest_streak(numbers, index, max_streak)
+        for index in range(max_streak)
+    ]
 
     return sum(result)
 
@@ -41,4 +46,4 @@ def solution(content: str):
 
 assert comfortable([1, 3, 2]) == 7
 
-print('Solution', solution(get_file_content('input38.txt')))
+print("Solution", solution(get_file_content("input38.txt")))
