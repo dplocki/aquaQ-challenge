@@ -2,9 +2,12 @@ from typing import Generator, Iterator, Tuple
 from utils import get_file_content
 
 
-def get_winning_darts_in_leg(
+def get_winning_darts_per_leg(
     source_darts: Iterator[int],
 ) -> Generator[Tuple[str, int], None, None]:
+    def swap_players(current_player: str):
+        return "B" if current_player == "A" else "A"
+
     score = {"A": 0, "B": 0}
     streak = 0
 
@@ -13,7 +16,7 @@ def get_winning_darts_in_leg(
     for dart in source_darts:
         if streak >= 3:
             streak = 0
-            current_player = "B" if current_player == "A" else "A"
+            current_player = swap_players(current_player)
 
         score[current_player] += dart
         streak += 1
@@ -21,10 +24,9 @@ def get_winning_darts_in_leg(
         if score[current_player] >= 501:
             yield current_player, dart
 
-            score["A"] = 0
-            score["B"] = 0
+            score = {"A": 0, "B": 0}
             streak = 0
-            player_starting_leg = "B" if player_starting_leg == "A" else "A"
+            player_starting_leg = swap_players(player_starting_leg)
             current_player = player_starting_leg
 
 
@@ -32,7 +34,7 @@ def solution(content: str) -> int:
     how_many_wins = 0
     sum_winning_darts = 0
 
-    for player, dart in get_winning_darts_in_leg(map(int, content.split(" "))):
+    for player, dart in get_winning_darts_per_leg(map(int, content.split(" "))):
         if player == "A":
             how_many_wins += 1
 
