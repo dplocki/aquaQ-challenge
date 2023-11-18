@@ -1,7 +1,10 @@
+from typing import Generator, Iterator, Tuple
 from utils import get_file_content
 
 
-def get_winning_darts_in_leg(source_darts):
+def get_winning_darts_in_leg(
+    source_darts: Iterator[int],
+) -> Generator[Tuple[str, int], None, None]:
     score = {"A": 0, "B": 0}
     streak = 0
 
@@ -25,7 +28,7 @@ def get_winning_darts_in_leg(source_darts):
             current_player = player_starting_leg
 
 
-def solution(content: str):
+def solution(content: str) -> int:
     how_many_wins = 0
     sum_winning_darts = 0
 
