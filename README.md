@@ -49,5 +49,5 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 36    | 6.0     | `maths`       | Tetonor Terror                        |
 | 37    | 5.7     | `stringProc`  | [GUESS WORDS](./solutions/challenge37.py)|
 | 38    | 5.0     | `listOps`     | [Number Neighbours](./solutions/challenge38.py)|
-| 39    | 3.5     | `permutation` | Game of Throwns                       |
+| 39    | 3.5     | `permutation` | [Game of Throwns](./solutions/challenge39.py)|
 | 40    | 4.0     | `listOps`     | Prominence promenade                  |
