@@ -21,31 +21,22 @@ def take_until(function: callable, iterable: Iterator) -> Generator:
 
 
 def prominence(extremum_map: List[int], peak_index: int) -> int:
+    def find_prominence(source: Iterator[int]) -> int:
+        passed_extremes = list(
+            take_until(
+                lambda p: p < peak,
+                (extremum_map[index] for index in source),
+            )
+        )
+
+        if passed_extremes and passed_extremes[-1] >= peak:
+            return peak - min(passed_extremes)
+
+        return peak
+
     peak = extremum_map[peak_index]
-    left_result = 0
-    right_result = 0
-
-    lutil = list(
-        take_until(
-            lambda p: p < peak,
-            (extremum_map[index] for index in range(peak_index - 1, -1, -1)),
-        )
-    )
-    if lutil and lutil[-1] >= peak:
-        left_result = peak - min(lutil)
-    else:
-        left_result = peak
-
-    rutil = list(
-        take_until(
-            lambda p: p < peak,
-            (extremum_map[index] for index in range(peak_index + 1, len(extremum_map))),
-        )
-    )
-    if rutil and rutil[-1] >= peak:
-        right_result = peak - min(rutil)
-    else:
-        right_result = peak
+    left_result = find_prominence(range(peak_index - 1, -1, -1))
+    right_result = find_prominence(range(peak_index + 1, len(extremum_map)))
 
     return min(left_result, right_result)
 
