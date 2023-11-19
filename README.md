@@ -50,4 +50,4 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 37    | 5.7     | `stringProc`  | [GUESS WORDS](./solutions/challenge37.py)|
 | 38    | 5.0     | `listOps`     | [Number Neighbours](./solutions/challenge38.py)|
 | 39    | 3.5     | `permutation` | [Game of Throwns](./solutions/challenge39.py)|
-| 40    | 4.0     | `listOps`     | Prominence promenade                  |
+| 40    | 4.0     | `listOps`     | [Prominence promenade](./solutions/challenge40.py)|
