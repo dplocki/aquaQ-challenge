@@ -21,7 +21,7 @@ def take_until(function: callable, iterable: Iterator) -> Generator:
 
 
 def prominence(extremum_map: List[int], peak_index: int) -> int:
-    def find_prominence(source: Iterator[int]) -> int:
+    def find_prominence(source: Iterator[int], peak: int) -> int:
         passed_extremes = list(
             take_until(
                 lambda p: p < peak,
@@ -35,8 +35,8 @@ def prominence(extremum_map: List[int], peak_index: int) -> int:
         return peak
 
     peak = extremum_map[peak_index]
-    left_result = find_prominence(range(peak_index - 1, -1, -1))
-    right_result = find_prominence(range(peak_index + 1, len(extremum_map)))
+    left_result = find_prominence(range(peak_index - 1, -1, -1), peak)
+    right_result = find_prominence(range(peak_index + 1, len(extremum_map)), peak)
 
     return min(left_result, right_result)
 
