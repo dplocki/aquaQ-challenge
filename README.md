@@ -14,7 +14,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 1      | 1.6        | `stringProc`  | [Rose by any other name](./tasks/challenge01.md)     |[Python script](./solutions/challenge01.py)|
 | 2      | 2.6        | `listOps`     | [One is all you need](./tasks/challenge02.md)        |[Python script](./solutions/challenge02.py)|
 | 3      | 3.1        | `paths+graphs`| [Short walks](./tasks/challenge03.md)                |[Python script](./solutions/challenge03.py)|
-| 4     | 3.8     | `maths`       | [This is good co-primen](./solutions/challenge04.py)|
+| 4      | 3.8        | `maths`       | [This is good co-primen](./tasks/challenge04.md)     |[Python script](./solutions/challenge04.py)|
 | 5     | 3.7     | `stateMgmt`   | [Snake eyes](./solutions/challenge05.py)|
 | 6     | 3.6     | `permutation` | [Let me count the ways](./solutions/challenge06.py)|
 | 7     | 4.0     | `maths`       | [What is best in life?](./solutions/challenge07.py)|
