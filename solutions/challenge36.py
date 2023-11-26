@@ -1,6 +1,7 @@
 from functools import reduce
 from math import sqrt
-from utils import get_file_content
+from typing import List
+from utils import get_file_content, split_into_groups
 
 
 def factors(n):
@@ -43,6 +44,14 @@ def recalculate_restriction(grid_numbers, composite_numbers):
         yield limiter
 
 
+def is_matching_restriction(restrictions, value):
+    for restriction in restrictions:
+        if restriction[0] <= value <= restriction[1]:
+            return True
+
+    return False
+
+
 def find_all_potential_pairs(grid_numbers, composite_numbers, restrictions):
     solution_pairs = set()
     for gn in grid_numbers:
@@ -63,29 +72,53 @@ def find_all_potential_pairs(grid_numbers, composite_numbers, restrictions):
     return solution_pairs
 
 
-def is_matching_restriction(restrictions, value):
-    for restriction in restrictions:
-        if restriction[0] <= value <= restriction[1]:
-            return True
+def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs, solution):
+    if len(solution) == 16:
+        for a, b in zip(sorted(solution), input_numbers):
+            if b == None:
+                continue
 
-    return False
+            if a != b:
+                return None
+
+        return solution
 
 
-def find_pairs(grid_numbers, composite_numbers):
-    restrictions = list(recalculate_restriction(grid_numbers, composite_numbers))
-    solution_pairs = find_all_potential_pairs(grid_numbers, composite_numbers, restrictions)
+    grid_number = grid_numbers[0]
+    for left, right in potential_pairs:
+        if (left + right != grid_number) and (left * right != grid_number):
+            continue
 
-    for _s in solution_pairs:
-        print(_s[0], _s[1])
-        #print('\t', s, s[0] + s[1], s[0] * s[1])
+        if (left + right not in grid_numbers) or (left * right not in grid_numbers):
+            continue
 
-    return solution_pairs
+        grid_numbers.remove(left + right)
+        grid_numbers.remove(left * right)
+
+        solution.append(left)
+        solution.append(right)
+
+        result = find_matching_pairs(grid_numbers.copy(), input_numbers.copy(), potential_pairs.copy(), solution.copy())
+        if result != None:
+            return result
+
+    return None
+
+
+def find_pairs(grid_numbers, input_numbers):
+    restrictions = list(recalculate_restriction(grid_numbers, input_numbers))
+    potential_pairs = find_all_potential_pairs(grid_numbers, input_numbers, restrictions)
+
+    matching_input_numbers = find_matching_pairs(grid_numbers, input_numbers, potential_pairs, [])
+    assert matching_input_numbers != None
+    assert len(matching_input_numbers) == 16
+    return list(split_into_groups(matching_input_numbers, 2))
 
 
 def solution(content: str):
     result = 0
-    for grid_numbers, check_numbers in parser(content):
-        a = find_pairs(grid_numbers, check_numbers)
+    for grid_numbers, input_numbers in parser(content):
+        a = find_pairs(grid_numbers, input_numbers)
         assert len(a) == 8
         for pair in a:
             result += abs(pair[0] - pair[1])
