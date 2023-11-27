@@ -1,10 +1,10 @@
 from functools import reduce
 from math import sqrt
-from typing import List
+from typing import Generator, List, Set, Tuple
 from utils import get_file_content, split_into_groups
 
 
-def factors(n):
+def factors(n: int) -> Set[int]:
     step = 2 if n % 2 else 1
     return set(
         reduce(
@@ -14,7 +14,7 @@ def factors(n):
     )
 
 
-def parser(content: str):
+def parser(content: str) -> Generator[Tuple[List[int], List[int]], None, None]:
     for group in content.split("\n\n"):
         grid_raw, input_raw = group.splitlines()
         yield list(map(int, grid_raw[2:].split())), list(
@@ -22,7 +22,9 @@ def parser(content: str):
         )
 
 
-def recalculate_restriction(grid_numbers, composite_numbers):
+def recalculate_restriction(
+    grid_numbers: List[int], composite_numbers: List[int]
+) -> Generator[Tuple[int, int, int], None, None]:
     minium_limit = 0
     limiter = None
 
@@ -44,7 +46,7 @@ def recalculate_restriction(grid_numbers, composite_numbers):
         yield limiter
 
 
-def is_matching_restriction(restrictions, value):
+def is_matching_restriction(restrictions: Tuple[int, int], value: int) -> bool:
     for restriction in restrictions:
         if restriction[0] <= value <= restriction[1]:
             return True
@@ -52,7 +54,11 @@ def is_matching_restriction(restrictions, value):
     return False
 
 
-def find_all_potential_pairs(grid_numbers, composite_numbers, restrictions):
+def find_all_potential_pairs(
+    grid_numbers: List[int],
+    composite_numbers: List[int],
+    restrictions: List[Tuple[int, int, int]],
+) -> Set[Tuple[int, int]]:
     solution_pairs = set()
     for gn in grid_numbers:
 
@@ -66,13 +72,20 @@ def find_all_potential_pairs(grid_numbers, composite_numbers, restrictions):
         for factor in factors(gn):
             other = gn // factor
             if factor + other in grid_numbers:
-                if is_matching_restriction(restrictions, factor) and is_matching_restriction(restrictions, other):
+                if is_matching_restriction(
+                    restrictions, factor
+                ) and is_matching_restriction(restrictions, other):
                     solution_pairs.add(tuple(sorted((factor, other))))
 
     return solution_pairs
 
 
-def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs, solution):
+def find_matching_pairs(
+    grid_numbers: List[int],
+    input_numbers: List[int],
+    potential_pairs: Set[Tuple[int, int]],
+    solution: List[int],
+) -> List[int]:
     if len(solution) == 16:
         for a, b in zip(sorted(solution), input_numbers):
             if b == None:
@@ -82,7 +95,6 @@ def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs,
                 return None
 
         return solution
-
 
     grid_number = grid_numbers[0]
     for left, right in potential_pairs:
@@ -101,22 +113,30 @@ def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs,
         solution_copy.append(left)
         solution_copy.append(right)
 
-        result = find_matching_pairs(grid_numbers_copy, input_numbers, potential_pairs, solution_copy)
+        result = find_matching_pairs(
+            grid_numbers_copy, input_numbers, potential_pairs, solution_copy
+        )
         if result != None:
             return result
 
     return None
 
 
-def find_pairs(grid_numbers, input_numbers):
+def find_pairs(
+    grid_numbers: List[int], input_numbers: List[int]
+) -> List[Tuple[int, int]]:
     restrictions = list(recalculate_restriction(grid_numbers, input_numbers))
-    potential_pairs = find_all_potential_pairs(grid_numbers, input_numbers, restrictions)
-    matching_input_numbers = find_matching_pairs(grid_numbers, input_numbers, potential_pairs, [])
+    potential_pairs = find_all_potential_pairs(
+        grid_numbers, input_numbers, restrictions
+    )
+    matching_input_numbers = find_matching_pairs(
+        grid_numbers, input_numbers, potential_pairs, []
+    )
 
     return list(split_into_groups(matching_input_numbers, 2))
 
 
-def solution(content: str):
+def solution(content: str) -> int:
     result = 0
     for grid_numbers, input_numbers in parser(content):
         a = find_pairs(grid_numbers, input_numbers)
@@ -126,4 +146,4 @@ def solution(content: str):
     return result
 
 
-print('Solution', solution(get_file_content("input36.txt")))
+print("Solution", solution(get_file_content("input36.txt")))
