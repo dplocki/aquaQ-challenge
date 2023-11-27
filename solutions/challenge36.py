@@ -92,13 +92,16 @@ def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs,
         if (left + right not in grid_numbers) or (left * right not in grid_numbers):
             continue
 
-        grid_numbers.remove(left + right)
-        grid_numbers.remove(left * right)
+        grid_numbers_copy = grid_numbers.copy()
+        solution_copy = solution.copy()
 
-        solution.append(left)
-        solution.append(right)
+        grid_numbers_copy.remove(left + right)
+        grid_numbers_copy.remove(left * right)
 
-        result = find_matching_pairs(grid_numbers.copy(), input_numbers.copy(), potential_pairs.copy(), solution.copy())
+        solution_copy.append(left)
+        solution_copy.append(right)
+
+        result = find_matching_pairs(grid_numbers_copy, input_numbers, potential_pairs, solution_copy)
         if result != None:
             return result
 
@@ -108,10 +111,8 @@ def find_matching_pairs(grid_numbers, input_numbers: List[int], potential_pairs,
 def find_pairs(grid_numbers, input_numbers):
     restrictions = list(recalculate_restriction(grid_numbers, input_numbers))
     potential_pairs = find_all_potential_pairs(grid_numbers, input_numbers, restrictions)
-
     matching_input_numbers = find_matching_pairs(grid_numbers, input_numbers, potential_pairs, [])
-    assert matching_input_numbers != None
-    assert len(matching_input_numbers) == 16
+
     return list(split_into_groups(matching_input_numbers, 2))
 
 
@@ -119,7 +120,6 @@ def solution(content: str):
     result = 0
     for grid_numbers, input_numbers in parser(content):
         a = find_pairs(grid_numbers, input_numbers)
-        assert len(a) == 8
         for pair in a:
             result += abs(pair[0] - pair[1])
 
