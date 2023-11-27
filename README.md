@@ -46,7 +46,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 33    | 3.2     | `permutation` | [Bit of Bully](./solutions/challenge33.py)|
 | 34    | 7.0     | `stateMgmt`   | Train in Vain                         |
 | 35    | 4.5     | `stringProc`  | Columns                               |
-| 36    | 6.0     | `maths`       | Tetonor Terror                        |
+| 36    | 6.0     | `maths`       | [Tetonor Terror](./solutions/challenge36.py)||
 | 37    | 5.7     | `stringProc`  | [GUESS WORDS](./solutions/challenge37.py)|
 | 38    | 5.0     | `listOps`     | [Number Neighbours](./solutions/challenge38.py)|
 | 39    | 3.5     | `permutation` | [Game of Throwns](./solutions/challenge39.py)|
