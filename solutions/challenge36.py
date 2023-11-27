@@ -24,16 +24,14 @@ def parser(content: str) -> Generator[Tuple[List[int], List[int]], None, None]:
 
 def recalculate_restriction(
     grid_numbers: List[int], composite_numbers: List[int]
-) -> Generator[Tuple[int, int, int], None, None]:
+) -> Generator[Tuple[int, int], None, None]:
     minium_limit = 0
     limiter = None
 
     for item in composite_numbers:
         if item == None:
             if limiter == None:
-                limiter = [minium_limit, None, 1]
-            else:
-                limiter[2] += 1
+                limiter = [minium_limit, None]
         else:
             minium_limit = item
             if limiter != None:
@@ -57,7 +55,7 @@ def is_matching_restriction(restrictions: Tuple[int, int], value: int) -> bool:
 def find_all_potential_pairs(
     grid_numbers: List[int],
     composite_numbers: List[int],
-    restrictions: List[Tuple[int, int, int]],
+    restrictions: List[Tuple[int, int]],
 ) -> Set[Tuple[int, int]]:
     solution_pairs = set()
     for gn in grid_numbers:
