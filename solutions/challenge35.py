@@ -1,12 +1,26 @@
 from collections import defaultdict
-from itertools import takewhile
+from typing import Dict
 from utils import get_file_content
 from functools import reduce
 from math import sqrt
 
-WORDS_PER_LENGTH = defaultdict(list)
-for word in get_file_content("validwords15.txt").splitlines():
-    WORDS_PER_LENGTH[len(word)].append(word)
+
+def build_words_per_length(file_name: str) -> Dict[int, str]:
+    result = defaultdict(list)
+    for word in get_file_content(file_name).splitlines():
+        result[len(word)].append(word)
+
+    return result
+
+
+def factors(n):
+    step = 2 if n % 2 else 1
+    return set(
+        reduce(
+            list.__add__,
+            ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0),
+        )
+    )
 
 
 def calculate(word: str):
@@ -20,52 +34,38 @@ def calculate(word: str):
     return tuple(result)
 
 
-assert calculate('GLASS') == (1, 2, 0, 3, 4)
-assert calculate('LEVER') == (2, 0, 4, 1, 3)
+def find_solo_combination(word_length: int):
+    counter = {}
+    result = {}
+
+    for word in WORDS_PER_LENGTH[word_length]:
+        code = calculate(word)
+        counter[code] = counter.get(code, 0) + 1
+        result[code] = word
+
+    for code, count in counter.items():
+        if count != 1:
+            del result[code]
+
+    return result
 
 
-for word in WORDS_PER_LENGTH[5]:
-    print(word, calculate(word))
-
-
-
-def factors(n):
-    step = 2 if n % 2 else 1
-    return set(
-        reduce(
-            list.__add__,
-            ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0),
-        )
-    )
-
-
-def perm(a, k=0):
-    if k == len(a):
-        print(a)
-    else:
-
-        for i in range(k, len(a)):
-            a[k], a[i] = a[i] ,a[k]
-
-            if a[0] != ' ':
-                perm(a, k+1)
-            else:
-                pass
-
-            a[k], a[i] = a[i], a[k]
-
-
-def solution(encrypted: str) -> str:
-    encrypted = encrypted.lower()
+def solution(words_per_length: Dict[int, str], encrypted: str) -> str:
     limit = len(encrypted)
 
-    for factor in factors(limit):
-        if factor in WORDS_PER_LENGTH:
-            print(factor)
-            a = encrypted[:: limit // factor]
-            perm(list(a))
+    for word_length in factors(limit):
+        if word_length in words_per_length:
+            words = find_solo_combination(word_length)
+
+            if len(words) == 0:
+                continue
+
+            print(word_length)
+            print(words)
 
 
-assert solution(" DV  NWECEE E ODEOAIEFACRSRLTE") == "glass"
+assert calculate("GLASS") == (1, 2, 0, 3, 4)
+assert calculate("LEVER") == (2, 0, 4, 1, 3)
 
-print("Solution", solution(get_file_content("input35.txt")[:-1]))
+WORDS_PER_LENGTH = build_words_per_length("validwords15.txt")
+print("Solution", solution(WORDS_PER_LENGTH, get_file_content("input35.txt")[:-1]))
