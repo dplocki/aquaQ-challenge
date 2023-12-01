@@ -21,7 +21,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 8      | 5.9        | `stateMgmt`    | [Cron Flakes](./tasks/challenge08.md)                | [Python script](./solutions/challenge08.py)|
 | 9      | 4.2        | `maths`        | [Big Data?](./tasks/challenge09.md)                  | [Python script](./solutions/challenge09.py)|
 | 10     | 5.8        | `paths+graphs` | [Troll Toll](./tasks/challenge10.md)                 | [Python script](./solutions/challenge10.py)|
-| 11    | 5.4     | `listOps`     | [Boxed In](./solutions/challenge11.py)|
+| 11     | 5.4        | `listOps`      | [Boxed In](./tasks/challenge11.md)                   | [Python script](./solutions/challenge11.py)|
 | 12    | 3.6     | `listOps`     | [A Day In The Lift](./solutions/challenge12.py)|
 | 13    | 5.9     | `listOps`     | [O RLE?](./solutions/challenge13.py)  |
 | 14    | 5.2     | `paths+graphs`| [That's a bingo](./solutions/challenge14.py)|
