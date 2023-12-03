@@ -23,7 +23,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 10     | 5.8        | `paths+graphs` | [Troll Toll](./tasks/challenge10.md)                 | [Python script](./solutions/challenge10.py)|
 | 11     | 5.4        | `listOps`      | [Boxed In](./tasks/challenge11.md)                   | [Python script](./solutions/challenge11.py)|
 | 12     | 3.6        | `listOps`      | [A Day In The Lift](./tasks/challenge12.md)          | [Python script](./solutions/challenge12.py)|
-| 13    | 5.9     | `listOps`     | [O RLE?](./solutions/challenge13.py)  |
+| 13     | 5.9        | `listOps`      | [O RLE?](./tasks/challenge13.md)                     | [Python script](./solutions/challenge13.py)|
 | 14    | 5.2     | `paths+graphs`| [That's a bingo](./solutions/challenge14.py)|
 | 15    | 5.6     | `paths+graphs`| [word wore more mare maze](./solutions/challenge15.py)|
 | 16    | 6.1     | `stringProc`  | [Keming](./solutions/challenge16.py)  |
