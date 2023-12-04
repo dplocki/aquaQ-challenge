@@ -1,6 +1,6 @@
 from collections import defaultdict
 from typing import Dict, Set
-from utils import get_file_content
+from utils import factors, get_file_content
 from functools import reduce
 from math import sqrt
 
@@ -11,16 +11,6 @@ def build_words_per_length(file_name: str) -> Dict[int, str]:
         result[len(word)].append(word)
 
     return result
-
-
-def factors(n: int) -> Set[int]:
-    step = 2 if n % 2 else 1
-    return set(
-        reduce(
-            list.__add__,
-            ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0),
-        )
-    )
 
 
 def calculate(word: str):

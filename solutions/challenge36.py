@@ -1,17 +1,6 @@
 from functools import reduce
-from math import sqrt
 from typing import Generator, List, Set, Tuple
-from utils import get_file_content, split_into_groups
-
-
-def factors(n: int) -> Set[int]:
-    step = 2 if n % 2 else 1
-    return set(
-        reduce(
-            list.__add__,
-            ([i, n // i] for i in range(1, int(sqrt(n)) + 1, step) if n % i == 0),
-        )
-    )
+from utils import factors, get_file_content, split_into_groups
 
 
 def parser(content: str) -> Generator[Tuple[List[int], List[int]], None, None]:
