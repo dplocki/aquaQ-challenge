@@ -30,7 +30,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 17     | 3.6        | `stateMgmt`    | [The Beautiful Shame](./tasks/challenge17.md)        | [Python script](./solutions/challenge17.py) |
 | 18     | 4.6        | `maths`        | [Emit time](./tasks/challenge18.md)                  | [Python script](./solutions/challenge18.py) |
 | 19     | 5.8        | `stateMgmt`    | [It's alive](./tasks/challenge19.md)                 | [Python script](./solutions/challenge19.py) |
-| 20    | 3.6     | `stateMgmt`   | [Blackjack](./solutions/challenge20.py)|
+| 20     | 3.6        | `stateMgmt`    | [Blackjack](./tasks/challenge20.md)                  | [Python script](./solutions/challenge20.py) |
 | 21    | 4.0     | `paths+graphs`| [Clean Sweep](./solutions/challenge21.py)|
 | 22    | 3.7     | `stringProc`  | [Veni Vidi Vitavi](./solutions/challenge22.py)|
 | 23    | 4.3     | `stringProc`  | [Fair Play](./solutions/challenge23.py)|
