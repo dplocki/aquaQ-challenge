@@ -1,35 +1,9 @@
-from typing import Dict, Tuple
+from heapq import heappop, heappush
 from utils import get_file_content, parse_as_csv_content
 from string import ascii_lowercase
 
-WAITING_ON_STATION_MINUTES = 5
+WAITING_ON_STATION = 5
 TRAIN_SOURCE = "_"
-
-
-class Train:
-    def __init__(self, name: str, time_table: Dict[str, Tuple[str, int]]) -> None:
-        self.name = name
-        self.time_table = time_table
-        self.previous_station = TRAIN_SOURCE
-
-
-class TrainBuilder:
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.last_station = TRAIN_SOURCE
-        self.last_station_time = 0
-        self.time_table = {}
-
-    def add_station(self, station_name: str, time_arrival: int) -> None:
-        self.time_table[self.last_station] = (
-            station_name,
-            time_arrival - self.last_station_time,
-        )
-        self.last_station = station_name
-        self.last_station_time = time_arrival
-
-    def build_run(self):
-        return Train(self.name, self.time_table)
 
 
 def transform_time_to_minutes(time_value: str):
@@ -37,31 +11,132 @@ def transform_time_to_minutes(time_value: str):
     return hour * 60 + minutes
 
 
+def transposition(source):
+    result = None
+    for row in source:
+        if result == None:
+            result = [[] for _ in row if _ != "a"]
+
+        tmp = enumerate(row)
+        next(tmp)
+        for index, column in tmp:
+            result[index - 1].append(column)
+
+    yield from result
+
+
 def transform_to_trains_table(content: str):
-    timetable_content = parse_as_csv_content(content, skip_headers=False)
+    for row in transposition(parse_as_csv_content(content)):
+        x = [None if t == "" else transform_time_to_minutes(t) for t in row]
 
-    headers = next(timetable_content)
-
-    trains_builders = [TrainBuilder(name) for name in headers[1:]]
-
-    for row in timetable_content:
-        station_name = row[0]
-
-        for time_arrival, trains_builder in zip(row[1:], trains_builders):
-            if time_arrival == "":
+        result = {}
+        previous_station = TRAIN_SOURCE
+        previous_time = 0
+        for index, station_time in enumerate(x):
+            if station_time == None:
                 continue
 
-            trains_builder.add_station(
-                station_name, transform_time_to_minutes(time_arrival)
-            )
+            station = ascii_lowercase[index]
+            result[previous_station] = (station, station_time - previous_time)
+            previous_station = station
+            previous_time = station_time
 
-    return [tb.build_run() for tb in trains_builders]
+        yield result
 
 
 def solution(content: str) -> int:
-    trains = transform_to_trains_table(content)
+    stations_names = set()
+    trains = []
 
-    return
+    for s in transform_to_trains_table(content):
+        trains.append(s)
+        stations_names.update(s.keys())
+        stations_names.update(x[0] for x in s.values())
+
+    stations_names.remove(TRAIN_SOURCE)
+    events = []
+    starts_times = {}
+    ends_times = {}
+
+    stations_queues = {s: [] for s in stations_names}
+    stations = {s: None for s in stations_names}
+
+    for train_index, train in enumerate(trains):
+        starts_times[train_index] = train[TRAIN_SOURCE][1]
+        heappush(
+            events,
+            (
+                train[TRAIN_SOURCE][1],
+                "arrive",
+                train_index,
+                train[TRAIN_SOURCE][0],
+                TRAIN_SOURCE,
+            ),
+        )
+
+    while events:
+        time, event_type, train_index, current_station, from_station = heappop(events)
+
+        if event_type == "arrive":
+            stations_queues[current_station].append((from_station, time, train_index))
+            heappush(
+                events,
+                (
+                    time,
+                    "zzzzz",
+                    None,
+                    current_station,
+                    None,
+                ),
+            )
+
+        elif event_type == "leave":
+            stations[current_station] = None
+            heappush(
+                events,
+                (
+                    time,
+                    "zzzzz",
+                    None,
+                    current_station,
+                    None,
+                ),
+            )
+
+            if current_station not in trains[train_index]:
+                ends_times[train_index] = time
+            else:
+                to_state, time_difference = trains[train_index][current_station]
+                heappush(
+                    events,
+                    (
+                        time + time_difference,
+                        "arrive",
+                        train_index,
+                        to_state,
+                        current_station,
+                    ),
+                )
+
+        elif event_type == "zzzzz":
+            if stations[current_station] == None and stations_queues[current_station]:
+                stations_queues[current_station].sort(reverse=True)
+                train_id = stations_queues[current_station].pop()[2]
+                stations[current_station] = train_id
+                heappush(
+                    events,
+                    (
+                        time + WAITING_ON_STATION,
+                        "leave",
+                        train_id,
+                        current_station,
+                        current_station,
+                    ),
+                )
+
+    return max(
+        ends_times[train_index] - _from for train_index, _from in starts_times.items()
+    )
 
 
 assert (
