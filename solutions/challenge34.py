@@ -4,6 +4,9 @@ from string import ascii_lowercase
 
 WAITING_ON_STATION = 5
 TRAIN_SOURCE = "_"
+EVENT_ARRIVE = 1
+EVENT_LEAVE = 2
+EVENT_STATION_STATE_CHANGE = 3
 
 
 def transform_time_to_minutes(time_value: str):
@@ -67,7 +70,7 @@ def solution(content: str) -> int:
             events,
             (
                 train[TRAIN_SOURCE][1],
-                "arrive",
+                EVENT_ARRIVE,
                 train_index,
                 train[TRAIN_SOURCE][0],
                 TRAIN_SOURCE,
@@ -77,26 +80,26 @@ def solution(content: str) -> int:
     while events:
         time, event_type, train_index, current_station, from_station = heappop(events)
 
-        if event_type == "arrive":
+        if event_type == EVENT_ARRIVE:
             stations_queues[current_station].append((from_station, time, train_index))
             heappush(
                 events,
                 (
                     time,
-                    "zzzzz",
+                    EVENT_STATION_STATE_CHANGE,
                     None,
                     current_station,
                     None,
                 ),
             )
 
-        elif event_type == "leave":
+        elif event_type == EVENT_LEAVE:
             stations[current_station] = None
             heappush(
                 events,
                 (
                     time,
-                    "zzzzz",
+                    EVENT_STATION_STATE_CHANGE,
                     None,
                     current_station,
                     None,
@@ -111,14 +114,14 @@ def solution(content: str) -> int:
                     events,
                     (
                         time + time_difference,
-                        "arrive",
+                        EVENT_ARRIVE,
                         train_index,
                         to_state,
                         current_station,
                     ),
                 )
 
-        elif event_type == "zzzzz":
+        elif event_type == EVENT_STATION_STATE_CHANGE:
             if stations[current_station] == None and stations_queues[current_station]:
                 stations_queues[current_station].sort(reverse=True)
                 train_id = stations_queues[current_station].pop()[2]
@@ -127,7 +130,7 @@ def solution(content: str) -> int:
                     events,
                     (
                         time + WAITING_ON_STATION,
-                        "leave",
+                        EVENT_LEAVE,
                         train_id,
                         current_station,
                         current_station,
