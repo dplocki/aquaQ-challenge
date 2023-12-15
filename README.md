@@ -35,7 +35,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 22     | 3.7        | `stringProc`   | [Veni Vidi Vitavi](./tasks/challenge22.md)           | [Python script](./solutions/challenge22.py) |
 | 23     | 4.3        | `stringProc`   | [Fair Play](./tasks/challenge23.md)                  | [Python script](./solutions/challenge23.py) |
 | 24     | 7.3        | `paths+graphs` | [Huff and Puff](./tasks/challenge24.md)              | [Python script](./solutions/challenge24.py) |
-| 25    | 3.1     | `listOps`     | [S'morse](./solutions/challenge25.py) |
+| 25     | 3.1        | `listOps`      | [S'morse](./tasks/challenge25.md)                    | [Python script](./solutions/challenge25.py) |
 | 26    | 4.5     | `permutation` | [Typo Theft](./solutions/challenge26.py)|
 | 27    | 3.4     | `stringProc`  | [Snake Eater](./solutions/challenge27.py)|
 | 28    | 3.8     | `paths+graphs`| [Hall of Mirrors](./solutions/challenge28.py)|
