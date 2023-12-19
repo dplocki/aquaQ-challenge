@@ -39,7 +39,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 26     | 4.5        | `permutation`  | [Typo Theft](./tasks/challenge26.md)                 | [Python script](./solutions/challenge26.py) |
 | 27     | 3.4        | `stringProc`   | [Snake Eater](./tasks/challenge27.md)                | [Python script](./solutions/challenge27.py) |
 | 28     | 3.8        | `paths+graphs` | [Hall of Mirrors](./tasks/challenge28.md)            | [Python script](./solutions/challenge28.py) |
-| 29    | 2.8     | `maths`       | [On the up and up](./solutions/challenge29.py)|
+| 29     | 2.8        | `maths`        | [On the up and up](./tasks/challenge29.md)           | [Python script](./solutions/challenge29.py) |
 | 30    | 5.9     | `listOps`     | [Flip Out](./solutions/challenge30.py)|
 | 31    | 6.1     | `stateMgmt`   | [Brandless Combination Cubes](./solutions/challenge31.py)|
 | 32    | 3.4     | `stringProc`  | [In Parenthesis](./solutions/challenge32.py)|
