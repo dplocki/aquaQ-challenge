@@ -42,7 +42,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 29     | 2.8        | `maths`        | [On the up and up](./tasks/challenge29.md)            | [Python script](./solutions/challenge29.py) |
 | 30     | 5.9        | `listOps`      | [Flip Out](./tasks/challenge30.md)                    | [Python script](./solutions/challenge30.py) |
 | 31     | 6.1        | `stateMgmt`    | [Brandless Combination Cubes](./tasks/challenge31.md) | [Python script](./solutions/challenge31.py) |
-| 32    | 3.4     | `stringProc`  | [In Parenthesis](./solutions/challenge32.py)|
+| 32     | 3.4        | `stringProc`   | [In Parenthesis](./tasks/challenge32.md)              | [Python script](./solutions/challenge32.py) |
 | 33    | 3.2     | `permutation` | [Bit of Bully](./solutions/challenge33.py)|
 | 34    | 7.0     | `stateMgmt`   | [Train in Vain](./solutions/challenge34.py)|
 | 35    | 4.5     | `stringProc`  | [Columns](./solutions/challenge35.py) |
