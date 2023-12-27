@@ -20,7 +20,7 @@ try
 
 This results in a chain three words long, including the starting and ending words.
 
-Using the word list here as a list of valid words, find the shortest full chain of each word pair in the input. The answer is the product of the lengths of each chain - so if the input was
+Using the word list [here](./words.txt) as a list of valid words, find the shortest full chain of each word pair in the input. The answer is the product of the lengths of each chain - so if the input was
 
 ```txt
 fly,try
