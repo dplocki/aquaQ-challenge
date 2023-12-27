@@ -45,7 +45,7 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 32     | 3.4        | `stringProc`   | [In Parenthesis](./tasks/challenge32.md)              | [Python script](./solutions/challenge32.py) |
 | 33     | 3.2        | `permutation`  | [Bit of Bully](./tasks/challenge33.md)                | [Python script](./solutions/challenge33.py) |
 | 34     | 7.0        | `stateMgmt`    | [Train in Vain](./tasks/challenge34.md)               | [Python script](./solutions/challenge34.py) |
-| 35    | 4.5     | `stringProc`  | [Columns](./solutions/challenge35.py) |
+| 35     | 4.5        | `stringProc`   | [Columns](./tasks/challenge35.md)                     | [Python script](./solutions/challenge35.py) |
 | 36    | 6.0     | `maths`       | [Tetonor Terror](./solutions/challenge36.py)||
 | 37    | 5.7     | `stringProc`  | [GUESS WORDS](./solutions/challenge37.py)|
 | 38    | 5.0     | `listOps`     | [Number Neighbours](./solutions/challenge38.py)|
