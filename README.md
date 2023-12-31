@@ -4,12 +4,12 @@ My responses to [AquaQ Challenge](https://challenges.aquaq.co.uk/).
 
 ## Technology
 
-Language [Python](https://www.python.org/), version 3.10.12.
+Language [Python](https://www.python.org/), version `3.10.12`.
 
 ## Solutions
 
-| Number | Difficulty | Tag            | Name                                                  | Solution |
-|-------:|:----------:|:---------------|:------------------------------------------------------|----------|
+| Number | Difficulty | Tag            | Name                                                  | Solution                                    |
+|-------:|:----------:|:--------------:|:------------------------------------------------------|:--------------------------------------------|
 | 0      | 1.7        | `stringProc`   | [What's a numpad?](./tasks/challenge00.md)            | [Python script](./solutions/challenge00.py) |
 | 1      | 1.6        | `stringProc`   | [Rose by any other name](./tasks/challenge01.md)      | [Python script](./solutions/challenge01.py) |
 | 2      | 2.6        | `listOps`      | [One is all you need](./tasks/challenge02.md)         | [Python script](./solutions/challenge02.py) |
