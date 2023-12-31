@@ -49,5 +49,5 @@ Language [Python](https://www.python.org/), version 3.10.12.
 | 36     | 6.0        | `maths`        | [Tetonor Terror](./tasks/challenge36.md)              | [Python script](./solutions/challenge36.py) |
 | 37     | 5.7        | `stringProc`   | [GUESS WORDS](./tasks/challenge37.md)                 | [Python script](./solutions/challenge37.py) |
 | 38     | 5.0        | `listOps`      | [Number Neighbours](./tasks/challenge38.md)           | [Python script](./solutions/challenge38.py) |
-| 39    | 3.5     | `permutation` | [Game of Throwns](./solutions/challenge39.py)|
+| 39     | 3.5        | `permutation`  | [Game of Throwns](./tasks/challenge39.md)             | [Python script](./solutions/challenge39.py) |
 | 40    | 4.0     | `listOps`     | [Prominence promenade](./solutions/challenge40.py)|
