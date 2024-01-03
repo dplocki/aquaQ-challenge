@@ -51,3 +51,18 @@ Language [Python](https://www.python.org/), version `3.10.12`.
 | 38     | 5.0        | `listOps`      | [Number Neighbours](./tasks/challenge38.md)           | [Python script](./solutions/challenge38.py) |
 | 39     | 3.5        | `permutation`  | [Game of Throwns](./tasks/challenge39.md)             | [Python script](./solutions/challenge39.py) |
 | 40     | 4.0        | `listOps`      | [Prominence promenade](./tasks/challenge40.md)        | [Python script](./solutions/challenge40.py) |
+
+## Badges:
+
+* **Fresh Face** - Signed up
+* **A Single Step** - Completed your first challenge
+* **A Fistful Of Challenges** - Completed 3 challenges
+* **A Few Challenges More** - Completed 5 challenges
+* **Octochamp** - Completed 8 challenges
+* **Baker's Dozen** - Completed 13 challenges
+* **Scabby Knees** - Stumbled
+* **Boarder** - Joined the leaderboard
+* **Rein It In** - Picked yourself up too soon
+* **Cleaned Up** - Caught 'em all
+* **777** - Completed 21 challenges
+* **Ask for More** - Completed 34 challenges
