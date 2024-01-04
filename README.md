@@ -52,7 +52,7 @@ Language [Python](https://www.python.org/), version `3.10.12`.
 | 39     | 3.5        | `permutation`  | [Game of Throwns](./tasks/challenge39.md)             | [Python script](./solutions/challenge39.py) |
 | 40     | 4.0        | `listOps`      | [Prominence promenade](./tasks/challenge40.md)        | [Python script](./solutions/challenge40.py) |
 
-## Badges:
+## Earned badges
 
 * **Fresh Face** - Signed up
 * **A Single Step** - Completed your first challenge
